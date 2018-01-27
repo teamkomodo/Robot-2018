@@ -1,0 +1,7 @@
+.metadata
+bin
+*~
+*.class
+*.jar
+*.war
+*.log
