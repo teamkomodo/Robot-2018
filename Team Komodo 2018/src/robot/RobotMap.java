@@ -9,7 +9,7 @@
 // it from being updated in the future.
 
 
-package robotMain;
+package robot;
 
 
 /**
@@ -21,6 +21,14 @@ package robotMain;
 public class RobotMap {
 	public static int leftJoystickPort = 1;
 	public static int rightJoystickPort = 0;
+	
+	public static int gamepadPort = 2;
+	public static int gamepadLX = 0;
+	public static int gamepadLY = 1;
+	public static int gamepadLT = 2;
+	public static int gamepadRT = 3;
+	public static int gamepadRX = 4;
+	public static int gamepadRY = 5;
 	
 	public static int leftTalon1Port = 0;
 	public static int rightTalon1Port = 1;

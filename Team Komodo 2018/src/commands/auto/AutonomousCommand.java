@@ -8,56 +8,51 @@
 // update. Deleting the comments indicating the section will prevent
 // it from being updated in the future.
 
-package commands;
+package commands.auto;
 
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import robotMain.OI;
-import robotMain.Robot;
+import robot.Robot;
 import subsystems.DriveSystem;
 
 /**
  *
  */
-public class DriveCommand extends Command {
+public class AutonomousCommand extends Command {
 	private DriveSystem driveSystem;
 	private DifferentialDrive robotDrive;
-	private Joystick leftJoystick;
-	private Joystick rightJoystick;
 	
-    public DriveCommand() {
-    	System.out.println("Drive Command Init");
+	private int driveCounter;
+	private int stopValue;
+	
+    public AutonomousCommand() {
         requires(Robot.driveSystem);
         
         driveSystem = Robot.driveSystem;
         robotDrive = Robot.driveSystem.getDrive();
         
-        leftJoystick = Robot.oi.getLeftJoystick();
-        rightJoystick = Robot.oi.getRightJoystick();
+        // TODO Use encoders instead of this bs
+        // Probably use some function in the DriveSubsystem to move x feet 
+        driveCounter = 0;
+        stopValue = 1000;
     }
 
     // Called just before this Command runs the first time
     @Override
     protected void initialize() {
-    	
     }
 
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
-    	if (driveSystem.getDriveType().isTank())
-    		robotDrive.tankDrive(leftJoystick.getY(), rightJoystick.getY());
-    	else if (driveSystem.getDriveType().isArcade1())
-    		robotDrive.arcadeDrive(leftJoystick.getY(), leftJoystick.getX());
-    	else if (driveSystem.getDriveType().isArcade2())
-    		robotDrive.arcadeDrive(leftJoystick.getY(), rightJoystick.getX());
+    	robotDrive.tankDrive(1, 1);
+    	driveCounter++;
     }
 
     // Make this return true when this Command no longer needs to run execute()
     @Override
     protected boolean isFinished() {
-        return false;
+        return (driveCounter > stopValue) ? true : false;
     }
 
     // Called once after isFinished returns true

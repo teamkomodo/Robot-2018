@@ -1,11 +1,9 @@
-package commands;
+package commands.teleop;
 
 import subsystems.DriveType;
 
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import robotMain.Robot;
+import robot.Robot;
 
 public class DriveTypeCommand extends Command {
 	private DriveType type;

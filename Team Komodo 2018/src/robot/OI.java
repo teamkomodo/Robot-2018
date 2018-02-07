@@ -9,15 +9,13 @@
 // it from being updated in the future.
 
 
-package robotMain;
+package robot;
 
 import subsystems.DriveType;
-
-import commands.*;
+import commands.teleop.*;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
 /**
@@ -33,6 +31,9 @@ public class OI {
     private Button setArcade1Button;
     private Button setArcade2Button;
 
+    private Joystick gamepadL;
+    private Joystick gamepadR;
+
     public OI() {
         leftJoystick = new Joystick(RobotMap.leftJoystickPort);
         rightJoystick = new Joystick(RobotMap.rightJoystickPort);
@@ -45,6 +46,16 @@ public class OI {
         
         setArcade2Button = new JoystickButton (rightJoystick, 10);
         setArcade2Button.whenPressed(new DriveTypeCommand(DriveType.ARCADE_2));
+        
+        gamepadL = new Joystick(RobotMap.gamepadPort);
+        gamepadL.setXChannel(RobotMap.gamepadLX);
+        gamepadL.setYChannel(RobotMap.gamepadLY);
+        gamepadL.setZChannel(RobotMap.gamepadLT);
+        
+        gamepadR = new Joystick(RobotMap.gamepadPort);
+        gamepadR.setXChannel(RobotMap.gamepadRX);
+        gamepadR.setYChannel(RobotMap.gamepadRY);
+        gamepadR.setZChannel(RobotMap.gamepadRT);
     }
 
     public Joystick getLeftJoystick() {
@@ -53,6 +64,14 @@ public class OI {
 
     public Joystick getRightJoystick() {
         return rightJoystick;
+    }
+    
+    public Joystick getGamepadL() {
+    	return gamepadL;
+    }
+    
+    public Joystick getGamepadR() {
+    	return gamepadR;
     }
 }
 

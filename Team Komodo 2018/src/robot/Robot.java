@@ -9,10 +9,8 @@
 // it from being updated in the future.
 
 
-package robotMain;
+package robot;
 
-import edu.wpi.cscore.CvSink;
-import edu.wpi.cscore.CvSource;
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -23,13 +21,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.vision.VisionThread;
 import vision.TestPipeline;
 
-import org.opencv.core.Mat;
 import org.opencv.core.Rect;
-import org.opencv.core.Scalar;
 import org.opencv.imgproc.Imgproc;
 import subsystems.*;
-
-import commands.*;
+import commands.auto.AutonomousCommand;
+import commands.teleop.*;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -46,6 +42,7 @@ public class Robot extends TimedRobot {
 
     public static OI oi;
     public static DriveSystem driveSystem;
+    public static ManipulatorSystem manipulatorSystem;
 
 	private static final int IMG_WIDTH = 640;
 	private static final int IMG_HEIGHT = 480;
@@ -62,6 +59,7 @@ public class Robot extends TimedRobot {
     @Override
     public void robotInit() {
         driveSystem = new DriveSystem();
+        manipulatorSystem = new ManipulatorSystem();
         
         // OI must be constructed after subsystems. If the OI creates Commands
         //(which it very likely will), subsystems are not guaranteed to be
