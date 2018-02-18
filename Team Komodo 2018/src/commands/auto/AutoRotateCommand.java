@@ -1,6 +1,6 @@
 package commands.auto;
 
-import robot.Robot;
+import robotMain.Robot;
 
 public class AutoRotateCommand extends AutoCommand {
 	private int lEncoderValue;

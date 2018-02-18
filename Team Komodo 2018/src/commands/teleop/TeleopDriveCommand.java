@@ -13,7 +13,7 @@ package commands.teleop;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import robot.Robot;
+import robotMain.Robot;
 import subsystems.DriveSystem;
 
 /**
@@ -29,7 +29,7 @@ public class TeleopDriveCommand extends Command {
         requires(Robot.driveSystem);
         
         driveSystem = Robot.driveSystem;
-        robotDrive = Robot.driveSystem.getDrive();
+        robotDrive = driveSystem.getDrive();
         
         leftJoystick = Robot.oi.getLeftJoystick();
         rightJoystick = Robot.oi.getRightJoystick();
@@ -44,13 +44,16 @@ public class TeleopDriveCommand extends Command {
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
+    	System.out.println(driveSystem.getDriveType());
     	switch (driveSystem.getDriveType()) {
     	case TANK:
-			robotDrive.tankDrive(leftJoystick.getY(), rightJoystick.getY());
+			robotDrive.tankDrive(-leftJoystick.getY(), -rightJoystick.getY());
     	case ARCADE_1:
-			robotDrive.arcadeDrive(leftJoystick.getY(), leftJoystick.getX());
+			robotDrive.arcadeDrive(-leftJoystick.getY(), -leftJoystick.getX());
     	case ARCADE_2:
-			robotDrive.arcadeDrive(leftJoystick.getY(), rightJoystick.getX());
+			robotDrive.arcadeDrive(-leftJoystick.getY(), -rightJoystick.getX());
+    	default:
+    		robotDrive.tankDrive(-leftJoystick.getY(), -rightJoystick.getY());
     	}
     }
 

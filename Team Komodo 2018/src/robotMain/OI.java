@@ -9,7 +9,7 @@
 // it from being updated in the future.
 
 
-package robot;
+package robotMain;
 
 import subsystems.DriveType;
 import commands.teleop.*;
@@ -39,13 +39,13 @@ public class OI {
         rightJoystick = new Joystick(RobotMap.rightJoystickPort);
         
         setTankButton = new JoystickButton (rightJoystick, 12);
-        setTankButton.whenPressed(new DriveTypeCommand(DriveType.TANK));
+        setTankButton.whenPressed(new SetDriveTypeCommand(DriveType.TANK));
         
         setArcade1Button = new JoystickButton (rightJoystick, 11);
-        setArcade1Button.whenPressed(new DriveTypeCommand(DriveType.ARCADE_1));
+        setArcade1Button.whenPressed(new SetDriveTypeCommand(DriveType.ARCADE_1));
         
         setArcade2Button = new JoystickButton (rightJoystick, 10);
-        setArcade2Button.whenPressed(new DriveTypeCommand(DriveType.ARCADE_2));
+        setArcade2Button.whenPressed(new SetDriveTypeCommand(DriveType.ARCADE_2));
         
         gamepadL = new Joystick(RobotMap.gamepadPort);
         gamepadL.setXChannel(RobotMap.gamepadLX);

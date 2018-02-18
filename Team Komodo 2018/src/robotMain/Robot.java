@@ -9,7 +9,7 @@
 // it from being updated in the future.
 
 
-package robot;
+package robotMain;
 
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.CameraServer;
@@ -38,11 +38,14 @@ public class Robot extends TimedRobot {
 
     Command autonomousCommand;
     Command driveCommand;
+    Command liftCommand;
+    Command manipulatorCommand;
     SendableChooser<Command> chooser = new SendableChooser<>();
 
     public static OI oi;
     public static DriveSystem driveSystem;
     public static ManipulatorSystem manipulatorSystem;
+    public static LifterSystem lifterSystem;
 
 	private static final int IMG_WIDTH = 640;
 	private static final int IMG_HEIGHT = 480;
@@ -60,6 +63,7 @@ public class Robot extends TimedRobot {
     public void robotInit() {
         driveSystem = new DriveSystem();
         manipulatorSystem = new ManipulatorSystem();
+        lifterSystem = new LifterSystem();
         
         // OI must be constructed after subsystems. If the OI creates Commands
         //(which it very likely will), subsystems are not guaranteed to be
@@ -70,6 +74,7 @@ public class Robot extends TimedRobot {
         UsbCamera camera = CameraServer.getInstance().startAutomaticCapture(0);
         camera.setResolution(IMG_WIDTH, IMG_HEIGHT);
         
+        /*
         visionThread = new VisionThread(camera, new TestPipeline(), pipeline -> {
             if (!pipeline.filterContoursOutput().isEmpty()) {
                 Rect r = Imgproc.boundingRect(pipeline.filterContoursOutput().get(0));
@@ -79,11 +84,13 @@ public class Robot extends TimedRobot {
             }
         });
         visionThread.start();
+        */
         
         // Add commands to Autonomous Sendable Chooser
         chooser.addDefault("Autonomous Command", new AutonomousCommand());
-
         chooser.addObject("Drive Command", driveCommand);
+        chooser.addObject("Lift Command", liftCommand);
+        chooser.addObject("Manipulator Command", manipulatorCommand);
         SmartDashboard.putData("Auto mode", chooser);
     }
 
@@ -104,6 +111,9 @@ public class Robot extends TimedRobot {
     @Override
     public void autonomousInit() {
         if (driveCommand != null) driveCommand.cancel();
+        if (liftCommand != null) liftCommand.cancel();
+        if (manipulatorCommand != null) manipulatorCommand.cancel();
+        
         autonomousCommand = chooser.getSelected();
         // schedule the autonomous command (example)
         if (autonomousCommand != null) autonomousCommand.start();
@@ -122,7 +132,10 @@ public class Robot extends TimedRobot {
         // This makes sure that the autonomous stops running when
         // teleop starts running
         if (autonomousCommand != null) autonomousCommand.cancel();
+        
         if (driveCommand != null) driveCommand.start();
+        if (liftCommand != null) liftCommand.start();
+        if (manipulatorCommand != null) manipulatorCommand.start();
     }
 
     /**

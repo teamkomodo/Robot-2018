@@ -13,22 +13,22 @@ package subsystems;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import robot.RobotMap;
+import robotMain.RobotMap;
 import commands.teleop.*;
 import edu.wpi.first.wpilibj.Sendable;
+import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
-import edu.wpi.first.wpilibj.Talon;
 
 
 /**
  *
  */
 public class DriveSystem extends Subsystem {
-    private SpeedController leftTalon1;
-    private SpeedControllerGroup leftTalons;
-    private SpeedController rightTalon1;
-    private SpeedControllerGroup rightTalons;
+    private SpeedController leftSpark1;
+    private SpeedControllerGroup leftSparks;
+    private SpeedController rightSpark1;
+    private SpeedControllerGroup rightSparks;
     private DifferentialDrive robotDrive;
     
     private DriveType driveType;
@@ -36,17 +36,17 @@ public class DriveSystem extends Subsystem {
     private AutoController autoController;
     
     public DriveSystem() {
-    	leftTalon1 = new Talon(RobotMap.leftTalon1Port);
-        leftTalon1.setInverted(false);
-    	((Sendable)leftTalon1).setName("DriveSystem", "Left Talon 1");
-        leftTalons = new SpeedControllerGroup(leftTalon1);
+    	leftSpark1 = new Spark(RobotMap.leftSpark1Port);
+    	leftSpark1.setInverted(false);
+    	((Sendable)leftSpark1).setName("DriveSystem", "Left Talon 1");
+    	leftSparks = new SpeedControllerGroup(leftSpark1);
         
-        rightTalon1 = new Talon(RobotMap.rightTalon1Port);
-        rightTalon1.setInverted(false);
-    	((Sendable)rightTalon1).setName("DriveSystem", "Right Talon 1");
-        rightTalons = new SpeedControllerGroup(rightTalon1);
+        rightSpark1 = new Spark(RobotMap.rightSpark1Port);
+        rightSpark1.setInverted(false);
+    	((Sendable)rightSpark1).setName("DriveSystem", "Right Talon 1");
+    	rightSparks = new SpeedControllerGroup(rightSpark1);
         
-        robotDrive = new DifferentialDrive(leftTalons, rightTalons);
+        robotDrive = new DifferentialDrive(leftSparks, rightSparks);
         
         robotDrive.setSafetyEnabled(false);
         robotDrive.setExpiration(0.1);

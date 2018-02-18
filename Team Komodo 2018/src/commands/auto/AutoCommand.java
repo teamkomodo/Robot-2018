@@ -1,7 +1,7 @@
 package commands.auto;
 
 import edu.wpi.first.wpilibj.command.Command;
-import robot.Robot;
+import robotMain.Robot;
 import subsystems.AutoController;
 
 public abstract class AutoCommand extends Command {

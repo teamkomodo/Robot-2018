@@ -3,12 +3,12 @@ package commands.teleop;
 import subsystems.DriveType;
 
 import edu.wpi.first.wpilibj.command.Command;
-import robot.Robot;
+import robotMain.Robot;
 
-public class DriveTypeCommand extends Command {
+public class SetDriveTypeCommand extends Command {
 	private DriveType type;
 	
-    public DriveTypeCommand(DriveType t) {
+    public SetDriveTypeCommand(DriveType t) {
         requires(Robot.driveSystem);
         
         type = t;

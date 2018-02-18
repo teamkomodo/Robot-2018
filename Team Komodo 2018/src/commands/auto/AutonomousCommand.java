@@ -12,14 +12,12 @@ package commands.auto;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import robot.Robot;
-import subsystems.DriveSystem;
+import robotMain.Robot;
 
 /**
  *
  */
 public class AutonomousCommand extends Command {
-	private DriveSystem driveSystem;
 	private DifferentialDrive robotDrive;
 	
 	private int driveCounter;
@@ -28,13 +26,12 @@ public class AutonomousCommand extends Command {
     public AutonomousCommand() {
         requires(Robot.driveSystem);
         
-        driveSystem = Robot.driveSystem;
         robotDrive = Robot.driveSystem.getDrive();
         
         // TODO Use encoders instead of this bs
         // Probably use some function in the DriveSubsystem to move x feet 
         driveCounter = 0;
-        stopValue = 1000;
+        stopValue = 50;
     }
 
     // Called just before this Command runs the first time
@@ -45,14 +42,18 @@ public class AutonomousCommand extends Command {
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
-    	robotDrive.tankDrive(1, 1);
+    	//robotDrive.tankDrive(-0.3, -0.3);
     	driveCounter++;
     }
 
     // Make this return true when this Command no longer needs to run execute()
     @Override
     protected boolean isFinished() {
-        return (driveCounter > stopValue) ? true : false;
+    	if (driveCounter > stopValue)
+    		return true;
+    	else
+    		return false;
+        //return (driveCounter > stopValue) ? true : false;
     }
 
     // Called once after isFinished returns true
