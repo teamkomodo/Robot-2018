@@ -31,7 +31,7 @@ public class AutonomousCommand extends Command {
         // TODO Use encoders instead of this bs
         // Probably use some function in the DriveSubsystem to move x feet 
         driveCounter = 0;
-        stopValue = 50;
+        stopValue = 10;
     }
 
     // Called just before this Command runs the first time
@@ -42,17 +42,18 @@ public class AutonomousCommand extends Command {
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
-    	//robotDrive.tankDrive(-0.3, -0.3);
+    	Robot.driveSystem.temptank(0.3, 0.3);
     	driveCounter++;
     }
 
     // Make this return true when this Command no longer needs to run execute()
     @Override
     protected boolean isFinished() {
-    	if (driveCounter > stopValue)
+    	if (driveCounter > stopValue) {
     		return true;
-    	else
+    	} else {
     		return false;
+    	}
         //return (driveCounter > stopValue) ? true : false;
     }
 

@@ -8,12 +8,19 @@ public class AutoRotateCommand extends AutoCommand {
 	
 	// Positive degreeRotation <=> counter-clockwise
 	// Negative degreeRotation <=> clockwise
+	// Left motor going forward will send left encoder going negative
     public AutoRotateCommand(double degreeRotation) {
         requires(Robot.driveSystem);
         
-        lEncoderValue = 0;
+        lEncoderValue = Robot.driveSystem.getLeftEncoderRaw();
         double rotationIN = controller.degreesToEncoder(degreeRotation);
-        stopValue = controller.inchesToEncoder(rotationIN);
+        stopValue = lEncoderValue+controller.inchesToEncoder(rotationIN);
+    }
+
+    // Called just before this Command runs the first time
+    @Override
+    protected void initialize() {
+    	System.out.println("Hiya");
     }
     
     // Called repeatedly when this Command is scheduled to run
@@ -28,13 +35,13 @@ public class AutoRotateCommand extends AutoCommand {
     		speed = controller.getAutoSpeed();
     	
     	controller.tank(speed, -speed);
-    	lEncoderValue += 1; // Will use left encoder diff in future
+    	lEncoderValue = Robot.driveSystem.getLeftEncoderRaw();
     }
 
     // Make this return true when this Command no longer needs to run execute()
     @Override
     protected boolean isFinished() {
-    	if (Math.abs(lEncoderValue) >= Math.abs(stopValue))
+    	if (Math.abs(stopValue)-Math.abs(lEncoderValue) <= 25)
     		return true;
     	return false;
     }

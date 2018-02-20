@@ -14,7 +14,9 @@ package subsystems;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import robotMain.RobotMap;
+import commands.auto.AutonomousCommand;
 import commands.teleop.*;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Sendable;
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.SpeedController;
@@ -27,8 +29,12 @@ import edu.wpi.first.wpilibj.SpeedControllerGroup;
 public class DriveSystem extends Subsystem {
     private SpeedController leftSpark1;
     private SpeedControllerGroup leftSparks;
+    private Encoder leftEncoder;
+    
     private SpeedController rightSpark1;
     private SpeedControllerGroup rightSparks;
+    private Encoder rightEncoder;
+    
     private DifferentialDrive robotDrive;
     
     private DriveType driveType;
@@ -40,11 +46,13 @@ public class DriveSystem extends Subsystem {
     	leftSpark1.setInverted(false);
     	((Sendable)leftSpark1).setName("DriveSystem", "Left Talon 1");
     	leftSparks = new SpeedControllerGroup(leftSpark1);
+    	leftEncoder = new Encoder(RobotMap.leftEncoderChannelA, RobotMap.leftEncoderChannelB);
         
         rightSpark1 = new Spark(RobotMap.rightSpark1Port);
         rightSpark1.setInverted(false);
     	((Sendable)rightSpark1).setName("DriveSystem", "Right Talon 1");
     	rightSparks = new SpeedControllerGroup(rightSpark1);
+    	rightEncoder = new Encoder(RobotMap.rightEncoderChannelA, RobotMap.rightEncoderChannelB);
         
         robotDrive = new DifferentialDrive(leftSparks, rightSparks);
         
@@ -60,12 +68,18 @@ public class DriveSystem extends Subsystem {
     @Override
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
+        //setDefaultCommand(new AutonomousCommand());
         setDefaultCommand(new TeleopDriveCommand());
     }
   
     @Override
     public void periodic() {
     	autoController.update();
+    }
+    
+    public void temptank(double a, double b) {
+    	leftSparks.set(-a);
+    	rightSparks.set(-b);
     }
     
     public DifferentialDrive getDrive() {
@@ -82,6 +96,14 @@ public class DriveSystem extends Subsystem {
     
     public AutoController getAutoController() {
     	return autoController;
+    }
+    
+    public int getLeftEncoderRaw() {
+    	return leftEncoder.getRaw();
+    }
+    
+    public int getRightEncoderRaw() {
+    	return rightEncoder.getRaw();
     }
     
 }

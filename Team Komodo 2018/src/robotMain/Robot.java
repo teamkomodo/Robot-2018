@@ -24,6 +24,7 @@ import vision.TestPipeline;
 import org.opencv.core.Rect;
 import org.opencv.imgproc.Imgproc;
 import subsystems.*;
+import commands.auto.AutoTestCommandGroup;
 import commands.auto.AutonomousCommand;
 import commands.teleop.*;
 

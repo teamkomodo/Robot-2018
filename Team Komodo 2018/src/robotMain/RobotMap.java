@@ -31,7 +31,12 @@ public class RobotMap {
 	public static int gamepadRY = 5;
 	
 	public static int leftSpark1Port = 0;
+	public static int leftEncoderChannelA = 0;
+	public static int leftEncoderChannelB = 1;
+	
 	public static int rightSpark1Port = 1;
+	public static int rightEncoderChannelA = 2;
+	public static int rightEncoderChannelB = 3;
 	
 	public static int lifterVictorsPort = 2;
 	public static int manipulatorVictorsPort = 3;
