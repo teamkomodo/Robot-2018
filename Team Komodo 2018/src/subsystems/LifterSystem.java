@@ -33,7 +33,7 @@ public class LifterSystem extends Subsystem {
     @Override
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
-        setDefaultCommand(new TeleopLiftCommand());
+        //setDefaultCommand(new TeleopLiftCommand());
     }
   
     @Override

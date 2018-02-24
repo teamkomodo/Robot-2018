@@ -12,6 +12,7 @@
 package robotMain;
 
 import subsystems.DriveType;
+import commands.auto.AutoRotateCommand;
 import commands.teleop.*;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
@@ -39,10 +40,12 @@ public class OI {
         rightJoystick = new Joystick(RobotMap.rightJoystickPort);
         
         setTankButton = new JoystickButton (rightJoystick, 12);
-        setTankButton.whenPressed(new SetDriveTypeCommand(DriveType.TANK));
+        //setTankButton.whenPressed(new SetDriveTypeCommand(DriveType.TANK));
+        setTankButton.whenPressed(new AutoRotateCommand(90));
         
         setArcade1Button = new JoystickButton (rightJoystick, 11);
-        setArcade1Button.whenPressed(new SetDriveTypeCommand(DriveType.ARCADE_1));
+        //setArcade1Button.whenPressed(new SetDriveTypeCommand(DriveType.ARCADE_1));
+        setArcade1Button.whenPressed(new AutoRotateCommand(-90));
         
         setArcade2Button = new JoystickButton (rightJoystick, 10);
         setArcade2Button.whenPressed(new SetDriveTypeCommand(DriveType.ARCADE_2));

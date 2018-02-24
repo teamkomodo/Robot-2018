@@ -22,7 +22,7 @@ public class RobotMap {
 	public static int leftJoystickPort = 1;
 	public static int rightJoystickPort = 0;
 	
-	public static int gamepadPort = 4; // normally 2, we're using an xbox controller rn
+	public static int gamepadPort = 4;
 	public static int gamepadLX = 0;
 	public static int gamepadLY = 1;
 	public static int gamepadLT = 2;

@@ -3,40 +3,49 @@ package commands.auto;
 import robotMain.Robot;
 
 public class AutoForwardDistanceCommand extends AutoCommand {
+	private double distanceFT;
+	private int startValue;
 	private int encoderValue;
 	private int stopValue;
 	
-    public AutoForwardDistanceCommand(double distanceIN) {
+    public AutoForwardDistanceCommand(double dFT) {
         requires(Robot.driveSystem);
-        
-        encoderValue = Robot.driveSystem.getLeftEncoderRaw();
-        stopValue = encoderValue+controller.inchesToEncoder(distanceIN);
+        distanceFT = dFT;
     }
 
     // Called just before this Command runs the first time
     @Override
     protected void initialize() {
-    	System.out.println("Hi");
+    	startValue = Robot.driveSystem.getLeftEncoderRaw();
+    	encoderValue = startValue;
+        stopValue = encoderValue+controller.feetToEncoder(distanceFT);
     }
 
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
     	double speed;
-    	if (stopValue-encoderValue < 0)
-    		speed = -controller.getAutoSpeed();
-    	else
+    	if (stopValue-startValue > 0)
     		speed = controller.getAutoSpeed();
+    	else
+    		speed = -controller.getAutoSpeed();
     	
-    	Robot.driveSystem.getDrive().tankDrive(-0.1, -0.1);
+    	controller.tank(speed, speed);
     	encoderValue = Robot.driveSystem.getLeftEncoderRaw();
     }
 
     // Make this return true when this Command no longer needs to run execute()
     @Override
     protected boolean isFinished() {
-    	if (Math.abs(stopValue)-Math.abs(encoderValue) <= 25)
-    		return true;
+    	if (stopValue>startValue) {
+    		if (encoderValue>stopValue) {
+    			return true;
+    		}
+    	} else {
+    		if (encoderValue<stopValue) {
+    			return true;
+    		}
+    	}
     	return false;
     }
 }

@@ -37,11 +37,11 @@ import commands.teleop.*;
  */
 public class Robot extends TimedRobot {
 
-    Command autonomousCommand;
-    Command driveCommand;
-    Command liftCommand;
-    Command manipulatorCommand;
-    SendableChooser<Command> chooser = new SendableChooser<>();
+    private Command autonomousCommand;
+    private Command teleopDriveCommand;
+    private Command teleopLiftCommand;
+    private Command teleopManipulatorCommand;
+    private SendableChooser<Command> chooser = new SendableChooser<>();
 
     public static OI oi;
     public static DriveSystem driveSystem;
@@ -87,11 +87,16 @@ public class Robot extends TimedRobot {
         visionThread.start();
         */
         
-        // Add commands to Autonomous Sendable Chooser
-        chooser.addDefault("Autonomous Command", new AutonomousCommand());
-        chooser.addObject("Drive Command", driveCommand);
-        chooser.addObject("Lift Command", liftCommand);
-        chooser.addObject("Manipulator Command", manipulatorCommand);
+        autonomousCommand = new AutoTestCommandGroup();
+        
+        teleopDriveCommand = new TeleopDriveCommand();
+        teleopLiftCommand = new TeleopLiftCommand();
+        teleopManipulatorCommand = new TeleopManipulatorCommand();
+
+        chooser.addDefault("Autonomous Command", autonomousCommand);
+        chooser.addObject("Drive Command", teleopDriveCommand);
+        chooser.addObject("Lift Command", teleopLiftCommand);
+        chooser.addObject("Manipulator Command", teleopManipulatorCommand);
         SmartDashboard.putData("Auto mode", chooser);
     }
 
@@ -111,12 +116,10 @@ public class Robot extends TimedRobot {
 
     @Override
     public void autonomousInit() {
-        if (driveCommand != null) driveCommand.cancel();
-        if (liftCommand != null) liftCommand.cancel();
-        if (manipulatorCommand != null) manipulatorCommand.cancel();
+        //if (teleopDriveCommand != null) teleopDriveCommand.cancel();
+        if (teleopLiftCommand != null) teleopLiftCommand.cancel();
+        if (teleopManipulatorCommand != null) teleopManipulatorCommand.cancel();
         
-        autonomousCommand = chooser.getSelected();
-        // schedule the autonomous command (example)
         if (autonomousCommand != null) autonomousCommand.start();
     }
 
@@ -130,13 +133,11 @@ public class Robot extends TimedRobot {
 
     @Override
     public void teleopInit() {
-        // This makes sure that the autonomous stops running when
-        // teleop starts running
         if (autonomousCommand != null) autonomousCommand.cancel();
         
-        if (driveCommand != null) driveCommand.start();
-        if (liftCommand != null) liftCommand.start();
-        if (manipulatorCommand != null) manipulatorCommand.start();
+        //if (teleopDriveCommand != null) teleopDriveCommand.start();
+        if (teleopLiftCommand != null) teleopLiftCommand.start();
+        if (teleopManipulatorCommand != null) teleopManipulatorCommand.start();
     }
 
     /**

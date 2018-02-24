@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import robotMain.Robot;
 import subsystems.DriveSystem;
+import subsystems.DriveType;
 
 /**
  *
@@ -44,6 +45,10 @@ public class TeleopDriveCommand extends Command {
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
+    	double leftValue = -leftJoystick.getY();
+    	double rightValue = -rightJoystick.getY();
+    	robotDrive.tankDrive(leftValue, rightValue);
+    	/*
     	switch (driveSystem.getDriveType()) {
     	case TANK:
 			robotDrive.tankDrive(-leftJoystick.getY(), -rightJoystick.getY());
@@ -54,6 +59,7 @@ public class TeleopDriveCommand extends Command {
     	default:
     		robotDrive.tankDrive(-leftJoystick.getY(), -rightJoystick.getY());
     	}
+    	*/
     }
 
     // Make this return true when this Command no longer needs to run execute()

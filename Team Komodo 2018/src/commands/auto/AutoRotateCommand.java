@@ -3,6 +3,8 @@ package commands.auto;
 import robotMain.Robot;
 
 public class AutoRotateCommand extends AutoCommand {
+	private int rotationEN;
+	private int startValue;
 	private int lEncoderValue;
 	private int stopValue;
 	
@@ -12,15 +14,15 @@ public class AutoRotateCommand extends AutoCommand {
     public AutoRotateCommand(double degreeRotation) {
         requires(Robot.driveSystem);
         
-        lEncoderValue = Robot.driveSystem.getLeftEncoderRaw();
-        double rotationIN = controller.degreesToEncoder(degreeRotation);
-        stopValue = lEncoderValue+controller.inchesToEncoder(rotationIN);
+        rotationEN = controller.degreesToEncoder(degreeRotation);
     }
 
     // Called just before this Command runs the first time
     @Override
     protected void initialize() {
-    	System.out.println("Hiya");
+    	startValue = Robot.driveSystem.getLeftEncoderRaw();
+        lEncoderValue = startValue;
+        stopValue = lEncoderValue+rotationEN;
     }
     
     // Called repeatedly when this Command is scheduled to run
@@ -28,12 +30,15 @@ public class AutoRotateCommand extends AutoCommand {
     protected void execute() {
     	double speed;
     	// Counter-Clockwise
-    	if (stopValue-lEncoderValue > 0)
-    		speed = -controller.getAutoSpeed();
+    	if (stopValue-startValue > 0)
+    		//speed = controller.getAutoSpeed();
+			speed = 0.7;
     	// Clockwise
     	else
-    		speed = controller.getAutoSpeed();
+    		//speed = -controller.getAutoSpeed();
+			speed = -0.7;
     	
+    	//controller.tank(speed, -speed);
     	controller.tank(speed, -speed);
     	lEncoderValue = Robot.driveSystem.getLeftEncoderRaw();
     }
@@ -41,8 +46,15 @@ public class AutoRotateCommand extends AutoCommand {
     // Make this return true when this Command no longer needs to run execute()
     @Override
     protected boolean isFinished() {
-    	if (Math.abs(stopValue)-Math.abs(lEncoderValue) <= 25)
-    		return true;
+    	if (stopValue>startValue) {
+    		if (lEncoderValue>stopValue) {
+    			return true;
+    		}
+    	} else {
+    		if (lEncoderValue<stopValue) {
+    			return true;
+    		}
+    	}
     	return false;
     }
 }

@@ -2,9 +2,9 @@ package subsystems;
 
 
 public class AutoController {
-	private final double DEFAULT_SPEED = 0.1;
-    private final double ROBOT_DIAMETER_IN = 24.8;
-    private final double FEET_TO_ENCODER_K = -5100;
+	private final double DEFAULT_SPEED = 0.5;
+    private final double ROBOT_DIAMETER_FT = 24.8/12;
+    private final double FEET_TO_ENCODER_K = 5100;
     //private final double FEET_TO_ENCODER_LK = -5100; // when going forwards
     //private final double FEET_TO_ENCODER_RK = 4200; // when going backwards
 
@@ -22,27 +22,17 @@ public class AutoController {
     
     public void tank(double leftSpeed, double rightSpeed) {
     	// The motors are reversed, so negative values will send the robot forward
-    	driveSystem.getDrive().tankDrive(-leftSpeed, -rightSpeed);
+    	driveSystem.getDrive().tankDrive(leftSpeed, rightSpeed);
     }
     
     // Positive degreeRotation <=> counter-clockwise
  	// Negative degreeRotation <=> clockwise
     public int degreesToEncoder(double degreeRotation) {
-    	return inchesToEncoder((degreeRotation/360.0)*ROBOT_DIAMETER_IN);
+    	return feetToEncoder((degreeRotation/360.0)*ROBOT_DIAMETER_FT*Math.PI);
     }
-    public int inchesToEncoder(double feetValue) {
+    public int feetToEncoder(double feetValue) {
     	return (int)(feetValue*FEET_TO_ENCODER_K);
     }
-    
-    /*
-    public int inchesToLeftEncoder(double feetValue) {
-    	return (int)(feetValue*FEET_TO_ENCODER_LK);
-    }
-    
-    public int inchesToRightEncoder(double feetValue) {
-    	return (int)(feetValue*FEET_TO_ENCODER_RK);
-    }
-    */
     
     public double getAutoSpeed() {
     	return autoSpeed;

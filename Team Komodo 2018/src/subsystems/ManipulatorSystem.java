@@ -14,7 +14,7 @@ public class ManipulatorSystem extends Subsystem {
 
 	@Override
 	protected void initDefaultCommand() {
-        setDefaultCommand(new TeleopManipulatorCommand());
+        //setDefaultCommand(new TeleopManipulatorCommand());
 	}
   
     @Override
