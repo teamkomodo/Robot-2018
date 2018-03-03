@@ -19,6 +19,23 @@ package robotMain;
  * floating around.
  */
 public class RobotMap {
+	
+	// Competition Robot                Practice Robot
+	// ==========================       ==========================
+	// 4 Spark motor controllers        4 Spark motor controllers
+	// 4 Victor SP                      3 Victor SP
+	// 2 Talon SRX                      3 Victor Pro SPX
+	
+	// Drive train uses identical controllers.
+	// Competition manipulator uses 2 Victor SP motor controllers.
+	// Practice manipulator uses 2 Victor Pro SPX motor controllers.
+	// Competition manipulator rotator uses 1 Talon SRX motor controller.
+	// Practice manipulator rotator uses 1 Victor Pro SPX motor controller.
+	// 1 Victor SP is unused on both robots.
+
+	// Boolean to indicate which robot we are using.
+	public static boolean isCompetitionBot = false;
+	
 	public static int leftJoystickPort = 1;
 	public static int rightJoystickPort = 0;
 	
@@ -29,6 +46,8 @@ public class RobotMap {
 	public static int gamepadRT = 3;
 	public static int gamepadRX = 4;
 	public static int gamepadRY = 5;
+	public static int gamepadLB = 6;
+	public static int gamepadRB = 7;
 	
 	public static int leftSpark1Port = 0;
 	public static int leftEncoderChannelA = 0;
@@ -38,7 +57,8 @@ public class RobotMap {
 	public static int rightEncoderChannelA = 2;
 	public static int rightEncoderChannelB = 3;
 	
-	public static int lifterVictorsPort = 2;
-	public static int manipulatorVictorsPort = 3;
+	public static int lifterControllerPort = 2;
+	public static int manipulatorControllerPort = 3;
+	public static int rotatorControllerPort = 4;
 	//public static int wenchServoPort = -1; // Not installed right now
 }

@@ -44,13 +44,13 @@ public class DriveSystem extends Subsystem {
     public DriveSystem() {
     	leftSpark1 = new Spark(RobotMap.leftSpark1Port);
     	leftSpark1.setInverted(false);
-    	((Sendable)leftSpark1).setName("DriveSystem", "Left Talon 1");
+    	((Sendable)leftSpark1).setName("DriveSystem", "Left Spark 1");
     	leftSparks = new SpeedControllerGroup(leftSpark1);
     	leftEncoder = new Encoder(RobotMap.leftEncoderChannelA, RobotMap.leftEncoderChannelB);
         
         rightSpark1 = new Spark(RobotMap.rightSpark1Port);
         rightSpark1.setInverted(false);
-    	((Sendable)rightSpark1).setName("DriveSystem", "Right Talon 1");
+    	((Sendable)rightSpark1).setName("DriveSystem", "Right Spark 1");
     	rightSparks = new SpeedControllerGroup(rightSpark1);
     	rightEncoder = new Encoder(RobotMap.rightEncoderChannelA, RobotMap.rightEncoderChannelB);
         

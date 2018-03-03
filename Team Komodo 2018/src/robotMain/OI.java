@@ -31,6 +31,8 @@ public class OI {
     private Button setTankButton;
     private Button setArcade1Button;
     private Button setArcade2Button;
+    private JoystickButton rotateManipulatorUp;
+    private JoystickButton rotateManipulatorDown;
 
     private Joystick gamepadL;
     private Joystick gamepadR;
@@ -59,6 +61,10 @@ public class OI {
         gamepadR.setXChannel(RobotMap.gamepadRX);
         gamepadR.setYChannel(RobotMap.gamepadRY);
         gamepadR.setZChannel(RobotMap.gamepadRT);
+        
+        rotateManipulatorUp = new JoystickButton (gamepadL, RobotMap.gamepadLB);
+        rotateManipulatorDown = new JoystickButton (gamepadL, RobotMap.gamepadRB);
+
     }
 
     public Joystick getLeftJoystick() {
@@ -75,6 +81,14 @@ public class OI {
     
     public Joystick getGamepadR() {
     	return gamepadR;
+    }
+    
+    public JoystickButton getGamepadLB() {
+    	return rotateManipulatorUp;
+    }
+    
+    public JoystickButton getGamepadRB() {
+    	return rotateManipulatorDown;
     }
 }
 

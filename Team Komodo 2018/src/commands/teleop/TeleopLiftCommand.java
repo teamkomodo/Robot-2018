@@ -11,7 +11,7 @@
 package commands.teleop;
 
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.Victor;
+import edu.wpi.first.wpilibj.PWMSpeedController;
 import edu.wpi.first.wpilibj.command.Command;
 import robotMain.Robot;
 
@@ -21,12 +21,12 @@ import robotMain.Robot;
 public class TeleopLiftCommand extends Command {
 	private Joystick gamepadL;
 	
-	private Victor lifterVictors;
+	private PWMSpeedController lifterController;
 	
     public TeleopLiftCommand() {
         requires(Robot.lifterSystem);
  
-        lifterVictors = Robot.lifterSystem.getLifterVictors();
+        lifterController = Robot.lifterSystem.getLifterController();
         gamepadL = Robot.oi.getGamepadL();
     }
 
@@ -39,7 +39,7 @@ public class TeleopLiftCommand extends Command {
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
-    	lifterVictors.set(gamepadL.getY());
+    	lifterController.set(gamepadL.getY());
     }
 
     // Make this return true when this Command no longer needs to run execute()

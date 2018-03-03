@@ -13,6 +13,7 @@ package robotMain;
 
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.CameraServer;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -47,6 +48,7 @@ public class Robot extends TimedRobot {
     public static DriveSystem driveSystem;
     public static ManipulatorSystem manipulatorSystem;
     public static LifterSystem lifterSystem;
+    public static ManipulatorRotatorSystem manipulatorRotatorSystem;
 
 	private static final int IMG_WIDTH = 640;
 	private static final int IMG_HEIGHT = 480;
@@ -65,6 +67,7 @@ public class Robot extends TimedRobot {
         driveSystem = new DriveSystem();
         manipulatorSystem = new ManipulatorSystem();
         lifterSystem = new LifterSystem();
+        manipulatorRotatorSystem = new ManipulatorRotatorSystem();
         
         // OI must be constructed after subsystems. If the OI creates Commands
         //(which it very likely will), subsystems are not guaranteed to be
@@ -116,7 +119,12 @@ public class Robot extends TimedRobot {
 
     @Override
     public void autonomousInit() {
-        //if (teleopDriveCommand != null) teleopDriveCommand.cancel();
+    	//WPI lib provided code to get the field data.  
+    	//Three character string for switch, scale, switch.
+    	String gameData;
+		gameData = DriverStation.getInstance().getGameSpecificMessage();
+		
+    	//if (teleopDriveCommand != null) teleopDriveCommand.cancel();
         if (teleopLiftCommand != null) teleopLiftCommand.cancel();
         if (teleopManipulatorCommand != null) teleopManipulatorCommand.cancel();
         

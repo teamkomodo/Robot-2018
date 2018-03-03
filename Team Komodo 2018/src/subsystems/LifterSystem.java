@@ -14,6 +14,7 @@ package subsystems;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import robotMain.RobotMap;
 import commands.teleop.*;
+import edu.wpi.first.wpilibj.PWMSpeedController;
 import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.Victor;
 
@@ -22,11 +23,11 @@ import edu.wpi.first.wpilibj.Victor;
  *
  */
 public class LifterSystem extends Subsystem {
-	private Victor lifterVictors;
+	private PWMSpeedController lifterController;
     private Servo wenchServo;
     
     public LifterSystem() {
-    	lifterVictors = new Victor(RobotMap.lifterVictorsPort);
+    	lifterController = new Victor(RobotMap.lifterControllerPort);
     	//wenchServo = new Servo(RobotMap.wenchServoPort);
     }
 
@@ -40,8 +41,8 @@ public class LifterSystem extends Subsystem {
     public void periodic() {
     }
     
-    public Victor getLifterVictors() {
-    	return lifterVictors;
+    public PWMSpeedController getLifterController() {
+    	return lifterController;
     }
     
 }
