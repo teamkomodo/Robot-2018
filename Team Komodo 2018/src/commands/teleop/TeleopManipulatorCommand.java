@@ -2,18 +2,27 @@ package commands.teleop;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PWMSpeedController;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import robotMain.Robot;
 
 public class TeleopManipulatorCommand extends Command {
 	private PWMSpeedController manipulatorController;
+	private PWMSpeedController rotatorController;
 	private Joystick gamepadR;
+	private JoystickButton gamepadRB;//down
+	private JoystickButton gamepadLB;//up
 	
     public TeleopManipulatorCommand() {
         requires(Robot.manipulatorSystem);
  
         manipulatorController = Robot.manipulatorSystem.getManipulatorController();
+        rotatorController = Robot.manipulatorSystem.getRotatorController();
+        
         gamepadR = Robot.oi.getGamepadR();
+        gamepadRB = Robot.oi.getGamepadRB();
+        gamepadLB = Robot.oi.getGamepadLB();
     }
 
     // Called just before this Command runs the first time
@@ -26,6 +35,18 @@ public class TeleopManipulatorCommand extends Command {
     @Override
     protected void execute() {
     	manipulatorController.set(gamepadR.getY());
+    	
+    	SmartDashboard.putBoolean("Button LB", gamepadLB.get());
+    	SmartDashboard.putBoolean("Button RB", gamepadRB.get());
+    	
+    	double speed = 0.25;
+    	if (gamepadRB.get() && !gamepadLB.get()) {
+    		rotatorController.set(speed);
+    	} else if (gamepadLB.get() && !gamepadRB.get()) {
+    		rotatorController.set(-speed);
+    	} else {
+    		rotatorController.set(0);
+    	}
     }
 
     // Make this return true when this Command no longer needs to run execute()

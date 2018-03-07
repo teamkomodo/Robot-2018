@@ -39,15 +39,15 @@ public class RobotMap {
 	public static int leftJoystickPort = 1;
 	public static int rightJoystickPort = 0;
 	
-	public static int gamepadPort = 4;
+	public static int gamepadPort = 2;
 	public static int gamepadLX = 0;
 	public static int gamepadLY = 1;
 	public static int gamepadLT = 2;
 	public static int gamepadRT = 3;
 	public static int gamepadRX = 4;
 	public static int gamepadRY = 5;
-	public static int gamepadLB = 6;
-	public static int gamepadRB = 7;
+	public static int gamepadLB = 5; // buttons
+	public static int gamepadRB = 6;
 	
 	public static int leftSpark1Port = 0;
 	public static int leftEncoderChannelA = 0;
