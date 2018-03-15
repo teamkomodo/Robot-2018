@@ -13,6 +13,7 @@ package subsystems;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import robotMain.Robot;
 import robotMain.RobotMap;
 import commands.auto.AutonomousCommand;
 import commands.teleop.*;
@@ -105,6 +106,18 @@ public class DriveSystem extends Subsystem {
     public int getRightEncoderRaw() {
     	return rightEncoder.getRaw();
     }
+    
+    public void resetLeftEncoder() {
+    	leftEncoder.reset();
+		System.out.println("Left encoder:/t" + Robot.driveSystem.getLeftEncoderRaw());
+    }
+    
+    public void resetRightEncoder() {
+    	rightEncoder.reset();
+		System.out.println("Right encoder:/t" + Robot.driveSystem.getRightEncoderRaw());
+    }
+    
+    
     
 }
 

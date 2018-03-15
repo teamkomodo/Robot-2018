@@ -11,8 +11,8 @@
 
 package robotMain;
 
-import edu.wpi.cscore.UsbCamera;
-import edu.wpi.first.wpilibj.CameraServer;
+//import edu.wpi.cscore.UsbCamera;
+//import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
@@ -73,9 +73,9 @@ public class Robot extends TimedRobot {
         // pointers. Bad news. Don't move it.
         oi = new OI();
         
-        UsbCamera camera = CameraServer.getInstance().startAutomaticCapture(0);
-        camera.setResolution(IMG_WIDTH, IMG_HEIGHT);
-        
+//        UsbCamera camera = CameraServer.getInstance().startAutomaticCapture(0);
+//        camera.setResolution(IMG_WIDTH, IMG_HEIGHT);
+//        
         /*
         visionThread = new VisionThread(camera, new TestPipeline(), pipeline -> {
             if (!pipeline.filterContoursOutput().isEmpty()) {

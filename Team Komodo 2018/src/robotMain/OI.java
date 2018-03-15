@@ -31,6 +31,9 @@ public class OI {
     private Button setTankButton;
     private Button setArcade1Button;
     private Button setArcade2Button;
+    
+    private Button printEncoders;
+    
     private JoystickButton rotateManipulatorUp;
     private JoystickButton rotateManipulatorDown;
 
@@ -38,19 +41,23 @@ public class OI {
     private Joystick gamepadR;
 
     public OI() {
+    	System.out.println("Hello OI");
         leftJoystick = new Joystick(RobotMap.leftJoystickPort);
         rightJoystick = new Joystick(RobotMap.rightJoystickPort);
         
         setTankButton = new JoystickButton (rightJoystick, 12);
-        //setTankButton.whenPressed(new SetDriveTypeCommand(DriveType.TANK));
-        setTankButton.whenPressed(new AutoRotateCommand(90));
+        setTankButton.whenPressed(new SetDriveTypeCommand(DriveType.TANK));
+        //setTankButton.whenPressed(new AutoRotateCommand(90));
         
         setArcade1Button = new JoystickButton (rightJoystick, 11);
-        //setArcade1Button.whenPressed(new SetDriveTypeCommand(DriveType.ARCADE_1));
-        setArcade1Button.whenPressed(new AutoRotateCommand(-90));
+        setArcade1Button.whenPressed(new SetDriveTypeCommand(DriveType.ARCADE_1));
+        //setArcade1Button.whenPressed(new AutoRotateCommand(-90));
         
         setArcade2Button = new JoystickButton (rightJoystick, 10);
         setArcade2Button.whenPressed(new SetDriveTypeCommand(DriveType.ARCADE_2));
+        
+        printEncoders = new JoystickButton(rightJoystick, 9);
+        printEncoders.whenPressed(new PrintEncodersCommand());
         
         gamepadL = new Joystick(RobotMap.gamepadPort);
         gamepadL.setXChannel(RobotMap.gamepadLX);

@@ -1,5 +1,6 @@
 package subsystems;
 
+import robotMain.RobotMap;
 
 public class AutoController {
 	private final double DEFAULT_SPEED = 0.5;
@@ -7,6 +8,7 @@ public class AutoController {
     private final double FEET_TO_ENCODER_K = 5100;
     //private final double FEET_TO_ENCODER_LK = -5100; // when going forwards
     //private final double FEET_TO_ENCODER_RK = 4200; // when going backwards
+    private final double FEET_TO_ENCODER_K_P = FEET_TO_ENCODER_K;
 
     private double autoSpeed = DEFAULT_SPEED;
     
@@ -31,7 +33,13 @@ public class AutoController {
     	return feetToEncoder((degreeRotation/360.0)*ROBOT_DIAMETER_FT*Math.PI);
     }
     public int feetToEncoder(double feetValue) {
-    	return (int)(feetValue*FEET_TO_ENCODER_K);
+    	double feetToEncoder;
+    	if(RobotMap.isCompetitionBot) {
+    		feetToEncoder = FEET_TO_ENCODER_K;
+    	}else {
+    		feetToEncoder = FEET_TO_ENCODER_K_P;
+    	}
+    	return (int)(feetValue*feetToEncoder);
     }
     
     public double getAutoSpeed() {

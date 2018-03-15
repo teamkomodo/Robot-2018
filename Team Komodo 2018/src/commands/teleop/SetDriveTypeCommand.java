@@ -12,6 +12,7 @@ public class SetDriveTypeCommand extends Command {
         requires(Robot.driveSystem);
         
         type = t;
+        System.out.println("Setting drive type: "+type);
     }
 
     // Called just before this Command runs the first time
