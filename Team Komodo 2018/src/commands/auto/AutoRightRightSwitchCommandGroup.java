@@ -2,7 +2,7 @@ package commands.auto;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
-public class AutoLeftLeftSwitchCommandGroup extends CommandGroup {
+public class AutoRightRightSwitchCommandGroup extends CommandGroup{
 	private final double startToSwitch = 0;
 	private final double startToSwitch2 = 0;
 	private final double turnToSwitch = 0;
@@ -11,7 +11,7 @@ public class AutoLeftLeftSwitchCommandGroup extends CommandGroup {
 	private final int manipulateTime = 0;
 	private final int waitTime = 10;
 	
-	public AutoLeftLeftSwitchCommandGroup() {
+	public AutoRightRightSwitchCommandGroup() {
 		addSequential(new AutoForwardDistanceCommand(startToSwitch));
 		addParallel(new AutoLiftTimeCommand(liftTime));
 		addSequential(new AutoForwardDistanceCommand(startToSwitch2));

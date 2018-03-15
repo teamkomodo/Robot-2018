@@ -14,8 +14,8 @@ public class PrintEncodersCommand extends Command {
 	}
 	@Override
 	protected void execute() {
-		System.out.println("Right encoder:/t" + Robot.driveSystem.getRightEncoderRaw());
-		System.out.println("Left encoder:/t" + Robot.driveSystem.getLeftEncoderRaw());
+		System.out.println("Right encoder:\t" + Robot.driveSystem.getRightEncoderRaw());
+		System.out.println("Left encoder:\t" + Robot.driveSystem.getLeftEncoderRaw());
 		Robot.driveSystem.resetRightEncoder();
 		Robot.driveSystem.resetLeftEncoder();
 
