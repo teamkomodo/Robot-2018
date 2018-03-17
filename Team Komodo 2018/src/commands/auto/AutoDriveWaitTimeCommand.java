@@ -3,33 +3,35 @@ package commands.auto;
 import robotMain.Robot;
 
 public class AutoDriveWaitTimeCommand extends AutoCommand {
-	private int timeCT;
-	private int time;
+
+	private double waitBeginning = 0;
 	
-    public AutoDriveWaitTimeCommand(int tCT) {
+    public AutoDriveWaitTimeCommand(double tCT) {
     	requires(Robot.driveSystem);
     	
-        timeCT = tCT;
+        setTimeout(tCT);
+    }
+    public AutoDriveWaitTimeCommand() {
+    	requires(Robot.driveSystem);
+    	
+        setTimeout(waitBeginning);
     }
 
     // Called just before this Command runs the first time
     @Override
     protected void initialize() {
-    	time = 0;
+    	
     }
     
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
     	Robot.driveSystem.getDrive().tankDrive(0, 0);
-    	time++;
     }
 
     // Make this return true when this Command no longer needs to run execute()
     @Override
     protected boolean isFinished() {
-    	if (time >= timeCT)
-    		return true;
-    	return false;
+    	return isTimedOut();
     }
 }

@@ -25,8 +25,8 @@ import vision.TestPipeline;
 import org.opencv.core.Rect;
 import org.opencv.imgproc.Imgproc;
 import subsystems.*;
-import commands.auto.AutoTestCommandGroup;
 import commands.auto.AutonomousCommand;
+import commands.auto.groups.AutoTestCommandGroup;
 import commands.teleop.*;
 
 /**
@@ -134,6 +134,9 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void autonomousPeriodic() {
+    	System.out.println(driveSystem.getLeftEncoderRaw());
+    	System.out.println(driveSystem.getRightEncoderRaw());
+    	System.out.println("---");
         Scheduler.getInstance().run();
     }
 

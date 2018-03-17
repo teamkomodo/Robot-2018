@@ -37,6 +37,7 @@ public class AutoForwardDistanceCommand extends AutoCommand {
     // Make this return true when this Command no longer needs to run execute()
     @Override
     protected boolean isFinished() {
+    	System.out.println(startValue+" "+encoderValue+" "+stopValue);
     	if (stopValue>startValue) {
     		if (encoderValue>stopValue) {
     			return true;

@@ -4,13 +4,14 @@ import edu.wpi.first.wpilibj.command.Command;
 import robotMain.Robot;
 
 public class PrintEncodersCommand extends Command {
-
+	private boolean done = false;
+	
 	@Override
 	protected void initialize() {
 		System.out.println("initializing PrintEncoders");
 		//Robot.driveSystem.resetLeftEncoder();
 		//Robot.driveSystem.resetRightEncoder();
-		
+		done = false;
 	}
 	@Override
 	protected void execute() {
@@ -18,13 +19,13 @@ public class PrintEncodersCommand extends Command {
 		System.out.println("Left encoder:\t" + Robot.driveSystem.getLeftEncoderRaw());
 		Robot.driveSystem.resetRightEncoder();
 		Robot.driveSystem.resetLeftEncoder();
-
+		done = true;
 	}
 	
 	@Override
 	protected boolean isFinished() {
 		// TODO Auto-generated method stub
-		return true;
+		return done;
 	}
 
 }
