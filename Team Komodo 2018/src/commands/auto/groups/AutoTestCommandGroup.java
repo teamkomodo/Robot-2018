@@ -2,7 +2,7 @@ package commands.auto.groups;
 
 import commands.auto.AutoDriveWaitTimeCommand;
 import commands.auto.AutoForwardDistanceCommand;
-import commands.auto.AutoRotateCommand;
+import commands.auto.AutoEncoderRotateCommand;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 public class AutoTestCommandGroup extends CommandGroup {

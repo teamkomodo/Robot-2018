@@ -4,7 +4,7 @@ import commands.auto.AutoDriveWaitTimeCommand;
 import commands.auto.AutoForwardDistanceCommand;
 import commands.auto.AutoLiftTimeCommand;
 import commands.auto.AutoManipulateTimeCommand;
-import commands.auto.AutoRotateCommand;
+import commands.auto.AutoEncoderRotateCommand;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 public class AutoMiddleStartCommandGroup extends CommandGroup{

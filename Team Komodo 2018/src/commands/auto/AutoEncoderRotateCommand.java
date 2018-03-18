@@ -2,7 +2,7 @@ package commands.auto;
 
 import robotMain.Robot;
 
-public class AutoRotateCommand extends AutoCommand {
+public class AutoEncoderRotateCommand extends AutoCommand {
 	private int rotationEN;
 	private int startValue;
 	private int lEncoderValue;
@@ -11,7 +11,7 @@ public class AutoRotateCommand extends AutoCommand {
 	// Positive degreeRotation <=> counter-clockwise
 	// Negative degreeRotation <=> clockwise
 	// Left motor going forward will send left encoder going negative
-    public AutoRotateCommand(double degreeRotation) {
+    public AutoEncoderRotateCommand(double degreeRotation) {
         requires(Robot.driveSystem);
         
         rotationEN = controller.degreesToEncoder(degreeRotation);
@@ -31,12 +31,10 @@ public class AutoRotateCommand extends AutoCommand {
     	double speed;
     	// Counter-Clockwise
     	if (stopValue-startValue > 0)
-    		//speed = controller.getAutoSpeed();
-			speed = 0.7;
+    		speed = controller.getAutoSpeed();
     	// Clockwise
     	else
-    		//speed = -controller.getAutoSpeed();
-			speed = -0.7;
+    		speed = -controller.getAutoSpeed();
     	
     	//controller.tank(speed, -speed);
     	controller.tank(speed, -speed);

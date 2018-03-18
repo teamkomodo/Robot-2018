@@ -1,5 +1,7 @@
 package subsystems;
 
+import edu.wpi.first.wpilibj.AnalogGyro;
+import edu.wpi.first.wpilibj.interfaces.Gyro;
 import robotMain.RobotMap;
 
 public class AutoController {
@@ -13,9 +15,11 @@ public class AutoController {
     private double autoSpeed = DEFAULT_SPEED;
     
     private DriveSystem driveSystem;
+    private Gyro autoGyro;
     
     public AutoController(DriveSystem drive) {
     	driveSystem = drive;
+    	autoGyro = new AnalogGyro(RobotMap.gyroPort);
     }
     
     // Called every DriveSystem's periodic
@@ -52,5 +56,13 @@ public class AutoController {
     
     public void resetAutoSpeed() {
     	autoSpeed = DEFAULT_SPEED;
+    }
+    
+    public void resetGyro() {
+    	autoGyro.reset();
+    }
+    
+    public double getAngle() {
+    	return autoGyro.getAngle();
     }
 }

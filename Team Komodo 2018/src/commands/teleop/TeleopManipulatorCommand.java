@@ -13,6 +13,7 @@ public class TeleopManipulatorCommand extends Command {
 	private Joystick gamepadR;
 	private JoystickButton gamepadRB;//down
 	private JoystickButton gamepadLB;//up
+	private JoystickButton halfSpeedOut;
 	
     public TeleopManipulatorCommand() {
         requires(Robot.manipulatorSystem);
@@ -23,6 +24,7 @@ public class TeleopManipulatorCommand extends Command {
         gamepadR = Robot.oi.getGamepadR();
         gamepadRB = Robot.oi.getGamepadRB();
         gamepadLB = Robot.oi.getGamepadLB();
+        halfSpeedOut = Robot.oi.getHalfSpeedOut();
     }
 
     // Called just before this Command runs the first time

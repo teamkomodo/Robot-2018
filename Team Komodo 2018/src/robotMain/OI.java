@@ -12,7 +12,7 @@
 package robotMain;
 
 import subsystems.DriveType;
-import commands.auto.AutoRotateCommand;
+import commands.auto.AutoEncoderRotateCommand;
 import commands.teleop.*;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
@@ -36,7 +36,8 @@ public class OI {
     
     private JoystickButton rotateManipulatorUp;
     private JoystickButton rotateManipulatorDown;
-    private JoystickButton switchDriveDirrection;
+    private JoystickButton switchDriveDirection;    
+    private JoystickButton halfSpeedOut;
 
     private Joystick gamepadL;
     private Joystick gamepadR;
@@ -60,21 +61,23 @@ public class OI {
         printEncoders = new JoystickButton(rightJoystick, 9);
         printEncoders.whenPressed(new PrintEncodersCommand());
         
-        switchDriveDirrection = new JoystickButton(rightJoystick, 3);
-        switchDriveDirrection.whenPressed(new SwitchDriveDirrectionCommand());
+        switchDriveDirection = new JoystickButton(rightJoystick, 3);
+        switchDriveDirection.whenPressed(new SwitchDriveDirrectionCommand());
         
         gamepadL = new Joystick(RobotMap.gamepadPort);
         gamepadL.setXChannel(RobotMap.gamepadLX);
         gamepadL.setYChannel(RobotMap.gamepadLY);
-        gamepadL.setZChannel(RobotMap.gamepadLT);
+        //gamepadL.setZChannel(RobotMap.gamepadLT);
         
         gamepadR = new Joystick(RobotMap.gamepadPort);
         gamepadR.setXChannel(RobotMap.gamepadRX);
         gamepadR.setYChannel(RobotMap.gamepadRY);
-        gamepadR.setZChannel(RobotMap.gamepadRT);
+        //gamepadR.setZChannel(RobotMap.gamepadRT);
         
         rotateManipulatorUp = new JoystickButton (gamepadL, RobotMap.gamepadLB);
         rotateManipulatorDown = new JoystickButton (gamepadL, RobotMap.gamepadRB);
+        
+        halfSpeedOut = new JoystickButton(gamepadL, RobotMap.gamepadLT);
 
     }
 
@@ -100,6 +103,10 @@ public class OI {
     
     public JoystickButton getGamepadRB() {
     	return rotateManipulatorDown;
+    }
+    
+    public JoystickButton getHalfSpeedOut() {
+    	return halfSpeedOut;
     }
 }
 
