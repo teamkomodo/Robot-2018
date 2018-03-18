@@ -77,7 +77,7 @@ public class OI {
         rotateManipulatorUp = new JoystickButton (gamepadL, RobotMap.gamepadLB);
         rotateManipulatorDown = new JoystickButton (gamepadL, RobotMap.gamepadRB);
         
-        halfSpeedOut = new JoystickButton(gamepadL, RobotMap.gamepadLT);
+        halfSpeedOut = new JoystickButton(gamepadL, RobotMap.gamepadRT);
 
     }
 

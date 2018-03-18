@@ -46,12 +46,15 @@ public class TeleopDriveCommand extends Command {
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
-    	double driveDirection = 1.0;
+    	double leftValue;
+    	double rightValue;
     	if(RobotMap.isReverseDrive) {
-    		driveDirection= -1.0;
+    		leftValue = rightJoystick.getY();
+        	rightValue = leftJoystick.getY();
+        }else{
+        	leftValue = -leftJoystick.getY();
+        	rightValue = -rightJoystick.getY();
     	}
-    	double leftValue = -leftJoystick.getY() * driveDirection;
-    	double rightValue = -rightJoystick.getY() * driveDirection;
     	robotDrive.tankDrive(leftValue, rightValue);
     	
 //    	switch (driveSystem.getDriveType()) {
