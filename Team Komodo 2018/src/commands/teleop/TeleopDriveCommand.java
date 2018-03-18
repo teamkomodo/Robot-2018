@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import robotMain.Robot;
+import robotMain.RobotMap;
 import subsystems.DriveSystem;
 import subsystems.DriveType;
 
@@ -45,8 +46,12 @@ public class TeleopDriveCommand extends Command {
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
-    	double leftValue = -leftJoystick.getY();
-    	double rightValue = -rightJoystick.getY();
+    	double driveDirection = 1.0;
+    	if(RobotMap.isReverseDrive) {
+    		driveDirection= -1.0;
+    	}
+    	double leftValue = -leftJoystick.getY() * driveDirection;
+    	double rightValue = -rightJoystick.getY() * driveDirection;
     	robotDrive.tankDrive(leftValue, rightValue);
     	
 //    	switch (driveSystem.getDriveType()) {

@@ -35,9 +35,11 @@ public class RobotMap {
 
 	// Boolean to indicate which robot we are using.
 	public static boolean isCompetitionBot = false;
+	public static boolean isReverseDrive = false;
 	
 	public static int leftJoystickPort = 1;
 	public static int rightJoystickPort = 0;
+	public static int switchDriveDirrection = 3;
 	
 	public static int gamepadPort = 2;
 	public static int gamepadLX = 0;

@@ -91,7 +91,7 @@ public class DriveSystem extends Subsystem {
     	return driveType;
     }
     
-    public void setDriveType(DriveType newType) {
+    public void setDriveType (DriveType newType) {
     	driveType = newType;
     }
     

@@ -36,6 +36,7 @@ public class OI {
     
     private JoystickButton rotateManipulatorUp;
     private JoystickButton rotateManipulatorDown;
+    private JoystickButton switchDriveDirrection;
 
     private Joystick gamepadL;
     private Joystick gamepadR;
@@ -58,6 +59,9 @@ public class OI {
         
         printEncoders = new JoystickButton(rightJoystick, 9);
         printEncoders.whenPressed(new PrintEncodersCommand());
+        
+        switchDriveDirrection = new JoystickButton(rightJoystick, 3);
+        switchDriveDirrection.whenPressed(new SwitchDriveDirrectionCommand());
         
         gamepadL = new Joystick(RobotMap.gamepadPort);
         gamepadL.setXChannel(RobotMap.gamepadLX);
