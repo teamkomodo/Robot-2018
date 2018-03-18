@@ -4,11 +4,11 @@ import commands.auto.AutoDriveWaitTimeCommand;
 import commands.auto.AutoEncoderRotateCommand;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
-public class AutoRotateWaitCommandGroup extends CommandGroup{
+public class AutoEncoderRotateWaitCommandGroup extends CommandGroup{
 
-	public AutoRotateWaitCommandGroup(double rotate) {
-		addSequential(new AutoDriveWaitTimeCommand(2.5));
+	public AutoEncoderRotateWaitCommandGroup(double rotate) {
+		addSequential(new AutoDriveWaitTimeCommand(0.5));
 		addSequential(new AutoEncoderRotateCommand(rotate));
-		addSequential(new AutoDriveWaitTimeCommand(2.5));
+		addSequential(new AutoDriveWaitTimeCommand(0.5));
 	}
 }

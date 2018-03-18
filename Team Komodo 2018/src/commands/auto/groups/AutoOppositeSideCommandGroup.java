@@ -33,11 +33,11 @@ public class AutoOppositeSideCommandGroup extends CommandGroup{
 	private void constructCommandGroup() {
 		addSequential(new AutoDriveWaitTimeCommand());
 		addSequential(new AutoForwardDistanceCommand(START_FT));
-		addSequential(new AutoRotateWaitCommandGroup(turnToGoalDegrees));
+		addSequential(new AutoEncoderRotateWaitCommandGroup(turnToGoalDegrees));
 		addSequential(new AutoForwardDistanceCommand(NEXT_FT));
-		addSequential(new AutoRotateWaitCommandGroup(finalTurnDegrees));
+		addSequential(new AutoEncoderRotateWaitCommandGroup(finalTurnDegrees));
 		addSequential(new AutoForwardDistanceCommand(finalApproachFT));
-		addSequential(new AutoRotateWaitCommandGroup(finalTurnDegrees));
+		addSequential(new AutoEncoderRotateWaitCommandGroup(finalTurnDegrees));
 		addSequential(new AutoLiftTimeCommand(LIFT_TIME_S));
 		addSequential(new AutoForwardDistanceCommand(END_DISTANCE_FT));
 		addSequential(new AutoManipulateTimeCommand(MANIPULATE_TIME_S));

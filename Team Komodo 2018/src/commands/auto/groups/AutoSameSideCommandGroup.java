@@ -27,7 +27,7 @@ public class AutoSameSideCommandGroup extends CommandGroup{
 	private void constructCommandGroup() {
 		addSequential(new AutoDriveWaitTimeCommand());
 		addSequential(new AutoForwardDistanceCommand(startFT));
-		addSequential(new AutoRotateWaitCommandGroup(turnToGoalDegrees));
+		addSequential(new AutoEncoderRotateWaitCommandGroup(turnToGoalDegrees));
 		addSequential(new AutoLiftTimeCommand(LIFT_TIME_S));
 		addSequential(new AutoForwardDistanceCommand(END_DISTANCE_FT));
 		addSequential(new AutoManipulateTimeCommand(MANIPULATE_TIME_S));

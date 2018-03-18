@@ -36,9 +36,9 @@ public class TeleopManipulatorCommand extends Command {
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
-    	double speed = 0.5;
+    	double speed = 0.35;
     	if(halfSpeedOut.get()) {
-    		manipulatorController.set(speed);
+    		manipulatorController.set(-speed);
     	}else{
     		manipulatorController.set(gamepadR.getY());
     	}

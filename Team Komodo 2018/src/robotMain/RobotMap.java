@@ -64,5 +64,5 @@ public class RobotMap {
 	public static int rotatorControllerPort = 4;
 	//public static int wenchServoPort = -1; // Not installed right now
 
-	public static int gyroPort = -1;
+	public static int gyroPort = 1;
 }

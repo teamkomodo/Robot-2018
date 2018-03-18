@@ -1,5 +1,6 @@
 package subsystems;
 
+import comAnalogAdis16448.ADIS16448_IMU;
 import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.interfaces.Gyro;
 import robotMain.RobotMap;
@@ -15,11 +16,11 @@ public class AutoController {
     private double autoSpeed = DEFAULT_SPEED;
     
     private DriveSystem driveSystem;
-    private Gyro autoGyro;
+    private ADIS16448_IMU autoGyro;
     
     public AutoController(DriveSystem drive) {
     	driveSystem = drive;
-    	autoGyro = new AnalogGyro(RobotMap.gyroPort);
+    	autoGyro = new ADIS16448_IMU();
     }
     
     // Called every DriveSystem's periodic
@@ -29,6 +30,10 @@ public class AutoController {
     public void tank(double leftSpeed, double rightSpeed) {
     	// The motors are reversed, so negative values will send the robot forward
     	driveSystem.getDrive().tankDrive(leftSpeed, rightSpeed);
+    }
+    
+    public void arcade(double speed, double angle) {
+    	driveSystem.getDrive().arcadeDrive(speed, angle);
     }
     
     // Positive degreeRotation <=> counter-clockwise
@@ -63,6 +68,6 @@ public class AutoController {
     }
     
     public double getAngle() {
-    	return autoGyro.getAngle();
+    	return autoGyro.getAngleX();
     }
 }

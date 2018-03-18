@@ -27,9 +27,9 @@ public class AutoMiddleStartCommandGroup extends CommandGroup{
 	private void constructCommandGroup() {
 		addSequential(new AutoDriveWaitTimeCommand());
 		addSequential(new AutoForwardDistanceCommand(FORWARD_ONE_FT));
-		addSequential(new AutoRotateWaitCommandGroup(turnToScaleDegreesOne));
+		addSequential(new AutoEncoderRotateWaitCommandGroup(turnToScaleDegreesOne));
 		addSequential(new AutoForwardDistanceCommand(FORWARD_TWO_FT));
-		addSequential(new AutoRotateWaitCommandGroup(turnToScaleDegreesTwo));
+		addSequential(new AutoEncoderRotateWaitCommandGroup(turnToScaleDegreesTwo));
 		addSequential(new AutoLiftTimeCommand(LIFT_TIME_S));
 		addSequential(new AutoForwardDistanceCommand(END_DISTANCE_FT));
 		addSequential(new AutoManipulateTimeCommand(MANIPULATE_TIME_S));
