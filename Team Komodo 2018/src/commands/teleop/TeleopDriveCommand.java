@@ -48,10 +48,11 @@ public class TeleopDriveCommand extends Command {
     protected void execute() {
     	double leftValue;
     	double rightValue;
-    	if(RobotMap.isReverseDrive) {
+    	if(RobotMap.isReverseDrive) {//for defense, etc. treats the robot as if the intake
+    		//was in the back
     		leftValue = rightJoystick.getY();
         	rightValue = leftJoystick.getY();
-        }else{
+        }else{//normal control
         	leftValue = -leftJoystick.getY();
         	rightValue = -rightJoystick.getY();
     	}
@@ -63,7 +64,7 @@ public class TeleopDriveCommand extends Command {
 //    	case ARCADE_1:
 //			robotDrive.arcadeDrive(-leftJoystick.getY(), -leftJoystick.getX());
 //    	case ARCADE_2:
-//			robotDrive.arcadeDrive(-leftJoystick.getY(), -rightJoystick.getX());
+//			robotDrive.arcadeDrive(-leftJoystick.getY(), -rightJoystick.getX());s
 //    	default:
 //    		robotDrive.tankDrive(-leftJoystick.getY(), -rightJoystick.getY());
 //    	}
