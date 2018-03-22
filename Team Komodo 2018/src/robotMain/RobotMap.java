@@ -34,7 +34,7 @@ public class RobotMap {
 	// 1 Victor SP is unused on both robots.
 
 	// Boolean to indicate which robot we are using.
-	public static boolean isCompetitionBot = false;
+	public static boolean isCompetitionBot = true;
 	public static boolean isReverseDrive = false;
 	
 	public static int leftJoystickPort = 1;

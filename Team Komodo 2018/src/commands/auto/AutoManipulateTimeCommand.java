@@ -22,13 +22,15 @@ public class AutoManipulateTimeCommand extends AutoCommand{
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
-    	Robot.manipulatorSystem.getManipulatorController().set(speed);
+    	Robot.manipulatorSystem.getManipulatorController().set(-speed);
     	
     }
 
     // Make this return true when this Command no longer needs to run execute()
     @Override
     protected boolean isFinished() {
+    	if (isTimedOut()) 
+        	Robot.manipulatorSystem.getManipulatorController().set(0);
     	return isTimedOut();
     }
 }

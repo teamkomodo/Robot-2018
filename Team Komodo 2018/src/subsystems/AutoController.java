@@ -11,7 +11,7 @@ public class AutoController {
     private final double FEET_TO_ENCODER_K = 5100;
     //private final double FEET_TO_ENCODER_LK = -5100; // when going forwards
     //private final double FEET_TO_ENCODER_RK = 4200; // when going backwards
-    private final double FEET_TO_ENCODER_K_P = 5100;
+    private final double FEET_TO_ENCODER_K_P = -5100;
 
     private double autoSpeed = DEFAULT_SPEED;
     

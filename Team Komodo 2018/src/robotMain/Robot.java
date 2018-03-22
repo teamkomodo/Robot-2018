@@ -11,6 +11,8 @@
 
 package robotMain;
 
+import edu.wpi.cscore.UsbCamera;
+import edu.wpi.first.wpilibj.CameraServer;
 //import edu.wpi.cscore.UsbCamera;
 //import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -26,6 +28,8 @@ import org.opencv.core.Rect;
 import org.opencv.imgproc.Imgproc;
 import subsystems.*;
 import commands.auto.AutonomousCommand;
+import commands.auto.groups.AutoLineCommandGroup;
+import commands.auto.groups.AutoSameSideCommandGroup;
 import commands.auto.groups.AutoTestCommandGroup;
 import commands.teleop.*;
 
@@ -73,9 +77,10 @@ public class Robot extends TimedRobot {
         // pointers. Bad news. Don't move it.
         oi = new OI();
         
-//        UsbCamera camera = CameraServer.getInstance().startAutomaticCapture(0);
-//        camera.setResolution(IMG_WIDTH, IMG_HEIGHT);
-//        
+        UsbCamera camera = CameraServer.getInstance().startAutomaticCapture(0);
+        camera.setResolution(IMG_WIDTH, IMG_HEIGHT);
+        camera.setFPS(30);
+        
         /*
         visionThread = new VisionThread(camera, new TestPipeline(), pipeline -> {
             if (!pipeline.filterContoursOutput().isEmpty()) {
@@ -88,16 +93,22 @@ public class Robot extends TimedRobot {
         visionThread.start();
         */
         
-        autonomousCommand = new AutoTestCommandGroup();
+        //autonomousCommand = new AutoTestCommandGroup();
+        autonomousCommand = new AutoSameSideCommandGroup("left", "scale");
         
         teleopDriveCommand = new TeleopDriveCommand();
         teleopLiftCommand = new TeleopLiftCommand();
         teleopManipulatorCommand = new TeleopManipulatorCommand();
 
-        chooser.addDefault("Autonomous Command", autonomousCommand);
-        chooser.addObject("Drive Command", teleopDriveCommand);
-        chooser.addObject("Lift Command", teleopLiftCommand);
-        chooser.addObject("Manipulator Command", teleopManipulatorCommand);
+        chooser.addDefault("Auto Line", new AutoLineCommandGroup());
+        chooser.addObject("Same Side Left Scale", new AutoSameSideCommandGroup("left",
+																				"scale"));
+		chooser.addObject("Same Side Left Switch", new AutoSameSideCommandGroup("left",
+																				 "switch"));
+		chooser.addObject("Same Side Right Scale", new AutoSameSideCommandGroup("right",
+																				"scale"));
+		chooser.addObject("Same Side Right Switch", new AutoSameSideCommandGroup("right",
+				 																 "switch"));
         SmartDashboard.putData("Auto mode", chooser);
     }
 
@@ -121,11 +132,13 @@ public class Robot extends TimedRobot {
     	//Three character string for switch, scale, switch.
     	String gameData;
 		gameData = DriverStation.getInstance().getGameSpecificMessage();
+		int startPosition;
 		
     	//if (teleopDriveCommand != null) teleopDriveCommand.cancel();
         if (teleopLiftCommand != null) teleopLiftCommand.cancel();
         if (teleopManipulatorCommand != null) teleopManipulatorCommand.cancel();
-        
+
+        autonomousCommand = (Command) chooser.getSelected();
         if (autonomousCommand != null) autonomousCommand.start();
     }
 
@@ -134,9 +147,6 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void autonomousPeriodic() {
-    	System.out.println(driveSystem.getLeftEncoderRaw());
-    	System.out.println(driveSystem.getRightEncoderRaw());
-    	System.out.println("---");
         Scheduler.getInstance().run();
     }
 

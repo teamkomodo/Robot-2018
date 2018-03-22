@@ -5,7 +5,7 @@ import subsystems.AutoController;
 
 public class AutoGyroForwardCommand extends AutoCommand {
 	AutoController controller;
-	double Kp = 0.03;
+	double Kp = 0.035;
 	private double distanceFT;
 	private int startValue;
 	private int encoderValue;
@@ -19,11 +19,12 @@ public class AutoGyroForwardCommand extends AutoCommand {
         controller = Robot.driveSystem.getAutoController();
         distanceFT = distance;
     }
-
+    
     // Called just before this Command runs the first time
     @Override
     protected void initialize() {
     	controller.resetGyro();
+    	Robot.driveSystem.resetLeftEncoder();
      	startValue = Robot.driveSystem.getLeftEncoderRaw();
     	encoderValue = startValue;
         stopValue = encoderValue+controller.feetToEncoder(distanceFT);
@@ -35,12 +36,13 @@ public class AutoGyroForwardCommand extends AutoCommand {
     	double speed = 0.75;
     	double angle = controller.getAngle(); // get current heading
         controller.arcade(speed, -angle*Kp); // drive towards heading 0
-    	encoderValue = Robot.driveSystem.getRightEncoderRaw();
+    	encoderValue = Robot.driveSystem.getLeftEncoderRaw();
     }
 
     // Make this return true when this Command no longer needs to run execute()
     @Override
     protected boolean isFinished() {
+    	System.out.println(startValue + " " + encoderValue + " " + stopValue);
     	if (stopValue>startValue) {
     		if (encoderValue>stopValue) {
     			return true;

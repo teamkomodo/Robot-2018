@@ -36,7 +36,7 @@ public class TeleopManipulatorCommand extends Command {
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
-    	double speed = 0.35;
+    	double speed = 0.35;//manipulator out speed
     	if(halfSpeedOut.get()) {
     		manipulatorController.set(-speed);
     	}else{
@@ -46,10 +46,11 @@ public class TeleopManipulatorCommand extends Command {
     	SmartDashboard.putBoolean("Button LB", gamepadLB.get());
     	SmartDashboard.putBoolean("Button RB", gamepadRB.get());
     	
+    	double speed2 = 0.5;//rotator motor speed
     	if (gamepadRB.get() && !gamepadLB.get()) {
-    		rotatorController.set(speed);
+    		rotatorController.set(speed2);
     	} else if (gamepadLB.get() && !gamepadRB.get()) {
-    		rotatorController.set(-speed);
+    		rotatorController.set(-speed2);
     	} else {
     		rotatorController.set(0);
     	}
