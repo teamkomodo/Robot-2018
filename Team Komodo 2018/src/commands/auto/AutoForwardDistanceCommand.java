@@ -7,16 +7,19 @@ public class AutoForwardDistanceCommand extends AutoCommand {
 	private int startValue;
 	private int encoderValue;
 	private int stopValue;
+	private double timerAdjustment = 7.0;
 	
     public AutoForwardDistanceCommand(double dFT) {
         requires(Robot.driveSystem);
         distanceFT = dFT;
+        
+        setTimeout(dFT/timerAdjustment);
     }
 
     // Called just before this Command runs the first time
     @Override
     protected void initialize() {
-    	startValue = Robot.driveSystem.getLeftEncoderRaw();
+    	startValue = Robot.driveSystem.getRightEncoderRaw();
     	encoderValue = startValue;
         stopValue = encoderValue+controller.feetToEncoder(distanceFT);
     }
@@ -31,7 +34,7 @@ public class AutoForwardDistanceCommand extends AutoCommand {
     		speed = -controller.getAutoSpeed();
     	
     	controller.tank(speed, speed);
-    	encoderValue = Robot.driveSystem.getLeftEncoderRaw();
+    	encoderValue = Robot.driveSystem.getRightEncoderRaw();
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -47,6 +50,6 @@ public class AutoForwardDistanceCommand extends AutoCommand {
     			return true;
     		}
     	}
-    	return false;
+    	return isTimedOut();
     }
 }

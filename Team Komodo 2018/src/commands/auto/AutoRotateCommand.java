@@ -20,7 +20,7 @@ public class AutoRotateCommand extends AutoCommand {
     // Called just before this Command runs the first time
     @Override
     protected void initialize() {
-    	startValue = Robot.driveSystem.getLeftEncoderRaw();
+    	startValue = Robot.driveSystem.getRightEncoderRaw();
         lEncoderValue = startValue;
         stopValue = lEncoderValue+rotationEN;
     }
@@ -40,7 +40,7 @@ public class AutoRotateCommand extends AutoCommand {
     	
     	//controller.tank(speed, -speed);
     	controller.tank(speed, -speed);
-    	lEncoderValue = Robot.driveSystem.getLeftEncoderRaw();
+    	lEncoderValue = Robot.driveSystem.getRightEncoderRaw();
     }
 
     // Make this return true when this Command no longer needs to run execute()

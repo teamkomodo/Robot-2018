@@ -10,6 +10,7 @@ public class AutoGyroForwardCommand extends AutoCommand {
 	private int startValue;
 	private int encoderValue;
 	private int stopValue;
+	private double timerAdjustment = 7.0;
 	
 	// Positive degreeRotation <=> counter-clockwise
 	// Negative degreeRotation <=> clockwise
@@ -18,13 +19,15 @@ public class AutoGyroForwardCommand extends AutoCommand {
         requires(Robot.driveSystem);
         controller = Robot.driveSystem.getAutoController();
         distanceFT = distance;
+        
+        setTimeout(distance/timerAdjustment);
     }
     
     // Called just before this Command runs the first time
     @Override
     protected void initialize() {
     	controller.resetGyro();
-    	Robot.driveSystem.resetLeftEncoder();
+    	Robot.driveSystem.resetRightEncoder();
      	startValue = -Robot.driveSystem.getRightEncoderRaw();
     	encoderValue = startValue;
         stopValue = encoderValue+controller.feetToEncoder(distanceFT);
@@ -52,6 +55,6 @@ public class AutoGyroForwardCommand extends AutoCommand {
     			return true;
     		}
     	}
-    	return false;
+    	return isTimedOut();
     }
 }
