@@ -14,7 +14,7 @@ public class AutoSameSideCommandGroup extends CommandGroup{
 	private double END_DISTANCE_FT = 55/12.0;
 	private double MANIPULATE_TIME_S = 1;
 	
-	private double startFT = 20;
+	private double startFT;
 	private double turnToGoalDegrees = 90;
 	private boolean useL = false;
 	private boolean useR = true;
@@ -28,10 +28,18 @@ public class AutoSameSideCommandGroup extends CommandGroup{
 		if(goal.equals("switch")) {
 			startFT = 168/12.0;
 			LIFT_TIME_S = 4;
+		}else {
+			startFT = 20;
 		}
 		constructCommandGroup();
 	}
 	private void constructCommandGroup() {
+//		System.out.println("startFT : "+startFT);
+//		System.out.println("turnToGoalDegrees : "+turnToGoalDegrees);
+//		System.out.println("useL : "+useL);
+//		System.out.println("useR : "+useR);
+//		System.out.println("LIFT_TIME_S : "+LIFT_TIME_S);
+//		System.out.println("MANIPULATE_TIME_S : "+MANIPULATE_TIME_S);
 		addSequential(new AutoGyroForwardCommand(startFT));
 		addSequential(new AutoDriveWaitTimeCommand(1));
 		addSequential(new AutoGyroRotateCommand(turnToGoalDegrees, useL, useR));

@@ -25,7 +25,7 @@ public class AutoGyroForwardCommand extends AutoCommand {
     protected void initialize() {
     	controller.resetGyro();
     	Robot.driveSystem.resetLeftEncoder();
-     	startValue = Robot.driveSystem.getLeftEncoderRaw();
+     	startValue = -Robot.driveSystem.getRightEncoderRaw();
     	encoderValue = startValue;
         stopValue = encoderValue+controller.feetToEncoder(distanceFT);
     }
@@ -33,10 +33,10 @@ public class AutoGyroForwardCommand extends AutoCommand {
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
-    	double speed = 0.75;
+    	double speed = 0.5;
     	double angle = controller.getAngle(); // get current heading
         controller.arcade(speed, -angle*Kp); // drive towards heading 0
-    	encoderValue = Robot.driveSystem.getLeftEncoderRaw();
+    	encoderValue = -Robot.driveSystem.getRightEncoderRaw();
     }
 
     // Make this return true when this Command no longer needs to run execute()
