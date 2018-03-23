@@ -153,8 +153,18 @@ public class Robot extends TimedRobot {
         if (teleopManipulatorCommand != null) teleopManipulatorCommand.cancel();
 
         //autonomousCommand = (Command) chooser.getSelected();
-        autonomousCommand = chooseCommand(positionChooser.getSelected(), 
-        		scaleChooser.getSelected(), 
+        boolean useDashboard = SmartDashboard.getBoolean("DB?Button 0", false);
+        POSITION start;
+        Boolean scale;
+        
+        if(useDashboard) {
+        	start = positionChooser.getSelected();
+        	scale = scaleChooser.getSelected();
+        }else {//default values: change these if the SmartDashboard is being dumb.
+        	start = POSITION.LEFT;
+        	scale = false;
+        }
+        autonomousCommand = chooseCommand(start, scale, 
         		getSide(gameData),
         		getSide(gameData.substring(1)));
         if (autonomousCommand != null) autonomousCommand.start();
