@@ -46,28 +46,39 @@ public class TeleopDriveCommand extends Command {
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
-    	double leftValue;
-    	double rightValue;
-    	if(RobotMap.isReverseDrive) {//for defense, etc. treats the robot as if the intake
-    		//was in the back
-    		leftValue = rightJoystick.getY();
-        	rightValue = leftJoystick.getY();
-        }else{//normal control
-        	leftValue = -leftJoystick.getY();
-        	rightValue = -rightJoystick.getY();
+    	double leftXValue = leftJoystick.getX();
+    	double rightXValue = rightJoystick.getX();
+    	double leftYValue = leftJoystick.getY();
+    	double rightYValue = rightJoystick.getY();
+
+    	switch (driveSystem.getDriveType()) {
+    	case TANK:
+    		if (RobotMap.isReverseDrive) {
+    			//for defense, etc. treats the robot as if the intake was in the back
+    			robotDrive.tankDrive(rightYValue, leftYValue);
+    		} else {
+    			//normal control
+    			robotDrive.tankDrive(-leftYValue, -rightYValue);
+    		}
+    	case ARCADE_1:
+    		if (RobotMap.isReverseDrive) {
+    			robotDrive.arcadeDrive(leftYValue, leftXValue);
+    		} else {
+    			robotDrive.arcadeDrive(-leftYValue, -leftXValue);
+    		}
+    	case ARCADE_2:
+    		if (RobotMap.isReverseDrive) {
+    			robotDrive.arcadeDrive(leftYValue, rightXValue);
+    		} else {
+    			robotDrive.arcadeDrive(-leftYValue, -rightXValue);
+    		}
+    	default:
+    		if (RobotMap.isReverseDrive) {
+    			robotDrive.tankDrive(rightYValue, leftYValue);
+    		} else {
+    			robotDrive.tankDrive(-leftYValue, -rightYValue);
+    		}
     	}
-    	robotDrive.tankDrive(leftValue, rightValue);
-    	
-//    	switch (driveSystem.getDriveType()) {
-//    	case TANK:
-//			robotDrive.tankDrive(-leftJoystick.getY(), -rightJoystick.getY());
-//    	case ARCADE_1:
-//			robotDrive.arcadeDrive(-leftJoystick.getY(), -leftJoystick.getX());
-//    	case ARCADE_2:
-//			robotDrive.arcadeDrive(-leftJoystick.getY(), -rightJoystick.getX());s
-//    	default:
-//    		robotDrive.tankDrive(-leftJoystick.getY(), -rightJoystick.getY());
-//    	}
     }
 
     // Make this return true when this Command no longer needs to run execute()
