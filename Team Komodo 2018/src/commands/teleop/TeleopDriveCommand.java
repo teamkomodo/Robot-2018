@@ -50,34 +50,56 @@ public class TeleopDriveCommand extends Command {
     	double rightXValue = rightJoystick.getX();
     	double leftYValue = leftJoystick.getY();
     	double rightYValue = rightJoystick.getY();
-
+  
+    	System.out.println("Drive type = "+driveSystem.getDriveType());
     	switch (driveSystem.getDriveType()) {
     	case TANK:
     		if (RobotMap.isReverseDrive) {
     			//for defense, etc. treats the robot as if the intake was in the back
     			robotDrive.tankDrive(rightYValue, leftYValue);
+    			//System.out.println("TANK  "+rightYValue+"/"+leftYValue+"  REVERSE");
     		} else {
     			//normal control
     			robotDrive.tankDrive(-leftYValue, -rightYValue);
+    			//System.out.println("TANK  "+(-leftYValue)+"/"+(-rightYValue));
     		}
+    		break;
     	case ARCADE_1:
     		if (RobotMap.isReverseDrive) {
-    			robotDrive.arcadeDrive(leftYValue, leftXValue);
+    			robotDrive.arcadeDrive(rightYValue, -rightXValue);
+    			//System.out.println("ARCADE 1  "+leftYValue+"/"+leftXValue+"  REVERSE");
     		} else {
-    			robotDrive.arcadeDrive(-leftYValue, -leftXValue);
+    			robotDrive.arcadeDrive(-rightYValue, rightXValue);
+    			//System.out.println("ARCADE 1  "+(-leftYValue)+"/"+(-leftXValue));
     		}
+    		break;
+//    	case ARCADE_2:
+//    		if (RobotMap.isReverseDrive) {
+//    			robotDrive.arcadeDrive(leftYValue, rightXValue);
+//    			//System.out.println("ARCADE 2  "+leftYValue+"/"+rightXValue+"  REVERSE");
+//    		} else {
+//    			robotDrive.arcadeDrive(-leftYValue, -rightXValue);
+//    			//System.out.println("ARCADE 2  "+(-leftYValue)+"/"+(-rightXValue));
+//    		}
+//    		break;
     	case ARCADE_2:
     		if (RobotMap.isReverseDrive) {
-    			robotDrive.arcadeDrive(leftYValue, rightXValue);
+    			robotDrive.arcadeDrive(rightYValue, leftXValue);
+    			//System.out.println("ARCADE 2  "+rightYValue+"/"+leftXValue+"  REVERSE");
     		} else {
-    			robotDrive.arcadeDrive(-leftYValue, -rightXValue);
+    			robotDrive.arcadeDrive(-rightYValue, -leftXValue);
+    			//System.out.println("ARCADE 2  "+(-rightYValue)+"/"+(-leftXValue));
     		}
+    		break;
     	default:
     		if (RobotMap.isReverseDrive) {
     			robotDrive.tankDrive(rightYValue, leftYValue);
+    			//System.out.println("TANK  "+rightYValue+"/"+leftYValue+"  REVERSE");
     		} else {
     			robotDrive.tankDrive(-leftYValue, -rightYValue);
+    			//System.out.println("TANK  "+(-leftYValue)+"/"+(-rightYValue));
     		}
+    		break;
     	}
     }
 
