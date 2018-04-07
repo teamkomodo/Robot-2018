@@ -46,7 +46,7 @@ public class TeleopManipulatorCommand extends Command {
     	SmartDashboard.putBoolean("Button LB", gamepadLB.get());
     	SmartDashboard.putBoolean("Button RB", gamepadRB.get());
     	
-    	double speed2 = 0.5;//rotator motor speed
+    	double speed2 = 0.6;//rotator motor speed
     	if (gamepadRB.get() && !gamepadLB.get()) {
     		rotatorController.set(speed2);
     	} else if (gamepadLB.get() && !gamepadRB.get()) {

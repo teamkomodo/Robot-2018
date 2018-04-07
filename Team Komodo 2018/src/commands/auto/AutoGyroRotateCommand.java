@@ -42,10 +42,10 @@ public class AutoGyroRotateCommand extends AutoCommand {
     	double speed;
     	// Counter-Clockwise
     	if (degreeRotation > 0)
-    		speed = controller.getAutoSpeed();
+    		speed = 0.75; //controller.getAutoSpeed();
     	// Clockwise
     	else
-    		speed = -controller.getAutoSpeed();
+    		speed = -0.75;//-controller.getAutoSpeed();
     	
     	//controller.tank(speed, -speed);
     	double lSpeed = useLeft ? speed : 0;

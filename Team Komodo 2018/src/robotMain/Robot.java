@@ -121,8 +121,8 @@ public class Robot extends TimedRobot {
         positionChooser.addObject("Right", POSITION.RIGHT);
         SmartDashboard.putData("Position", positionChooser);
         
-        scaleChooser.addDefault("Switch", Boolean.TRUE);
-        scaleChooser.addObject("Scale", Boolean.FALSE);
+        scaleChooser.addDefault("Switch", Boolean.FALSE);
+        scaleChooser.addObject("Scale", Boolean.TRUE);
         SmartDashboard.putData("Scale Override", scaleChooser);
 
     }
@@ -153,20 +153,27 @@ public class Robot extends TimedRobot {
         if (teleopManipulatorCommand != null) teleopManipulatorCommand.cancel();
 
         //autonomousCommand = (Command) chooser.getSelected();
-        boolean useDashboard = SmartDashboard.getBoolean("DB?Button 0", false);
+        boolean useDashboard = SmartDashboard.getBoolean("DB/Button 0", false);
         POSITION start;
         Boolean scale;
         
         if(useDashboard) {
+        	System.out.println("Use Dashboard");
         	start = positionChooser.getSelected();
         	scale = scaleChooser.getSelected();
         }else {//default values: change these if the SmartDashboard is being dumb.
+        	System.out.println("Use Default");
         	start = POSITION.LEFT;
         	scale = false;
         }
-        autonomousCommand = chooseCommand(start, scale, 
-        		getSide(gameData),
-        		getSide(gameData.substring(1)));
+    	System.out.println("gameData = "+gameData);
+
+        //autonomousCommand = chooseCommand(start, scale, 
+        	//	getSide(gameData),
+        		//getSide(gameData.substring(1)));
+    	autonomousCommand = chooseCommand(POSITION.RIGHT, true, getSide(gameData), getSide(gameData.substring(1)));
+    	//chooseCommand(start, scale, getSide(gameData), getSide(gameData.substring(1)));
+    	//autonomousCommand = new AutoLineCommandGroup();
         if (autonomousCommand != null) autonomousCommand.start();
     }
 
@@ -205,24 +212,43 @@ public class Robot extends TimedRobot {
     
     public Command chooseCommand(POSITION startPosition, Boolean scaleOverride, 
     		POSITION switchSide, POSITION scaleSide) {
+    	System.out.println(startPosition.toString() + " " + scaleOverride + " "
+    			+ switchSide.toString() + " " + scaleSide.toString());
     	Command autoCommand = null;
+    	System.out.println("Scale Override = "+(scaleOverride?"True":"False"));
     	if (scaleOverride && startPosition.equals(scaleSide)) {//go to same side scale
     		if (startPosition.equals(POSITION.LEFT)) {
+    			System.out.println("Scale override, Left");
     			autoCommand = new AutoSameSideCommandGroup("left","scale");
     		} else {
+    			System.out.println("Scale override, Right");
     			autoCommand = new AutoSameSideCommandGroup("right","scale");
     		}
     	} else {
     		if(startPosition.equals(switchSide)) {//deliver to same side of switch
     			if(startPosition.equals(POSITION.LEFT)) {
+        			System.out.println("Switch, Left");//matt was here
     				autoCommand = new AutoSameSideCommandGroup("left","switch");
     			}else {
+        			System.out.println("Switch, Right");
     				autoCommand = new AutoSameSideCommandGroup("right","switch");
     			}
     		}else {
-				autoCommand = new AutoLineCommandGroup();
-    		}
+    			if (startPosition.equals(scaleSide)) {//go to same side scale
+    	    		if (startPosition.equals(POSITION.LEFT)) {
+    	    			System.out.println("Scale override, Left");
+    	    			autoCommand = new AutoSameSideCommandGroup("left","scale");
+    	    		} else {
+    	    			System.out.println("Scale override, Right");
+    	    			autoCommand = new AutoSameSideCommandGroup("right","scale");
+    	    		}
+    	    	}else{
+    				System.out.println("Forward");
+    				autoCommand = new AutoLineCommandGroup();
+    	    	}
+			}
     	}
+    	//autoCommand = new AutoSameSideCommandGroup("right", "switch");
     	return autoCommand;
     }
-    }
+}

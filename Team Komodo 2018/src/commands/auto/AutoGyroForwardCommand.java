@@ -5,12 +5,14 @@ import subsystems.AutoController;
 
 public class AutoGyroForwardCommand extends AutoCommand {
 	AutoController controller;
-	double Kp = 0.035;
+	double Kp = 0.04;
 	private double distanceFT;
 	private int startValue;
 	private int encoderValue;
 	private int stopValue;
-	private double timerAdjustment = 7.0;
+	private double timerAdjustment = 1;
+	
+	private double dSpeed;
 	
 	// Positive degreeRotation <=> counter-clockwise
 	// Negative degreeRotation <=> clockwise
@@ -21,31 +23,48 @@ public class AutoGyroForwardCommand extends AutoCommand {
         distanceFT = distance;
         
         setTimeout(distance/timerAdjustment);
+        
+        dSpeed = controller.getAutoSpeed();
     }
     
+    public AutoGyroForwardCommand(double distance, double speed) {
+        requires(Robot.driveSystem);
+        controller = Robot.driveSystem.getAutoController();
+        distanceFT = distance;
+        
+        setTimeout(distance/timerAdjustment);
+        
+        dSpeed = speed;
+    }
+    
+    private int getEncoderRaw() {
+		//return -Robot.driveSystem.getRightEncoderRaw();
+		return Robot.driveSystem.getLeftEncoderRaw();
+	}
+
     // Called just before this Command runs the first time
     @Override
     protected void initialize() {
     	controller.resetGyro();
     	Robot.driveSystem.resetRightEncoder();
-     	startValue = -Robot.driveSystem.getRightEncoderRaw();
+     	startValue = getEncoderRaw();
     	encoderValue = startValue;
         stopValue = encoderValue+controller.feetToEncoder(distanceFT);
     }
     
-    // Called repeatedly when this Command is scheduled to run
+	// Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
-    	double speed = 0.5;
+    	double speed = 0.75;
     	double angle = controller.getAngle(); // get current heading
-        controller.arcade(speed, -angle*Kp); // drive towards heading 0
-    	encoderValue = -Robot.driveSystem.getRightEncoderRaw();
+        controller.arcade(dSpeed, angle*Kp); // drive towards heading 0
+    	encoderValue = getEncoderRaw();
     }
 
     // Make this return true when this Command no longer needs to run execute()
     @Override
     protected boolean isFinished() {
-    	System.out.println(startValue + " " + encoderValue + " " + stopValue);
+    	//System.out.println(startValue + " " + encoderValue + " " + stopValue);
     	if (stopValue>startValue) {
     		if (encoderValue>stopValue) {
     			return true;

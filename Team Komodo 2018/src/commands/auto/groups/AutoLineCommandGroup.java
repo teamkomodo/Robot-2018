@@ -7,10 +7,10 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 
 public class AutoLineCommandGroup extends CommandGroup{
 
-	private double forward = 9;
+	private double forward = 12;
 	
 	public AutoLineCommandGroup() {
-		addSequential (new AutoDriveWaitTimeCommand());
-		addSequential (new AutoGyroForwardCommand(forward));
+		addSequential (new AutoDriveWaitTimeCommand(10));
+		//addSequential (new AutoGyroForwardCommand(forward));
 	}
 }
