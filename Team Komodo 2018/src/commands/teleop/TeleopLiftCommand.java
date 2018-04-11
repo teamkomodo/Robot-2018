@@ -39,7 +39,11 @@ public class TeleopLiftCommand extends Command {
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
-    	lifterController.set(gamepadL.getY());
+    	int channel1 = 14;
+    	int channel2 = 15;
+    	double liftTotalCurrent = Robot.pdp.getCurrent(channel1) + Robot.pdp.getCurrent(channel1);
+    	// TODO: limit lifter motors so we don't burn them up
+    	lifterController.set(gamepadL.getY() * Robot.getAmpAdjust());
     }
 
     // Make this return true when this Command no longer needs to run execute()
