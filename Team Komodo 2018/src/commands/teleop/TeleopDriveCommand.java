@@ -53,12 +53,14 @@ public class TeleopDriveCommand extends Command {
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
-    	double currentLX = calculateAdjustedJoystickPosition(leftJoystick.getX(), leftXValue);
-    	double currentRX = calculateAdjustedJoystickPosition(rightJoystick.getX(), rightXValue);
-    	double currentLY = calculateAdjustedJoystickPosition( leftJoystick.getY(), leftYValue);
-    	double currentRY = calculateAdjustedJoystickPosition(rightJoystick.getY(), rightYValue);
+
+    	double currentLX = calculateAdjustedJoystickPosition(leftJoystick.getX(), leftXValue) * Robot.getAmpAdjust();
+    	double currentRX = calculateAdjustedJoystickPosition(rightJoystick.getX(), rightXValue) * Robot.getAmpAdjust();
+    	double currentLY = calculateAdjustedJoystickPosition( leftJoystick.getY(), leftYValue) * Robot.getAmpAdjust();
+    	double currentRY = calculateAdjustedJoystickPosition(rightJoystick.getY(), rightYValue) * Robot.getAmpAdjust();
     	
     	System.out.println("Drive type = "+driveSystem.getDriveType());
+
     	switch (driveSystem.getDriveType()) {
     	case TANK:
     		if (RobotMap.isReverseDrive) {
@@ -113,45 +115,48 @@ public class TeleopDriveCommand extends Command {
         leftYValue = currentLY;
         rightYValue = currentRY;
     }
-private double calculateAdjustedJoystickPosition(double currentPosition, double previousPosition) {
-	int function = 0;
-	double precision = 0.01;
-	double percentStep = 0.05;
-	double slowStartStop = 0.3;
-	double slowPercentStep = 0.02;
-	double adjusted = currentPosition;
-	if(function == 0) {
-		if(Math.abs(currentPosition-previousPosition) > precision) {
-			adjusted = (currentPosition + previousPosition) / 2;
-		}
-	}else if(function == 1) {
-		if(Math.abs(currentPosition - previousPosition) > percentStep) {
-			if(currentPosition > previousPosition) {
-				adjusted += percentStep;
-			}else {
-				adjusted -= percentStep;
+    
+	private double calculateAdjustedJoystickPosition(double currentPosition,
+													 double previousPosition) {
+		int function = -1;
+		double precision = 0.01;
+		double percentStep = 0.05;
+		double slowStartStop = 0.3;
+		double slowPercentStep = 0.02;
+		double adjusted = currentPosition;
+		
+		if(function == 0) {
+			if(Math.abs(currentPosition-previousPosition) > precision) {
+				adjusted = (currentPosition + previousPosition) / 2;
 			}
+		}else if(function == 1) {
+			if(Math.abs(currentPosition - previousPosition) > percentStep) {
+				if(currentPosition > previousPosition) {
+					adjusted += percentStep;
+				}else {
+					adjusted -= percentStep;
+				}
+			}
+		}else if (function == 2) {
+			 if(Math.abs(previousPosition) <= slowStartStop && Math.abs(currentPosition) > previousPosition) {
+				 if(Math.abs(currentPosition - previousPosition) > slowPercentStep) {
+						if(currentPosition > previousPosition) {
+							adjusted += slowPercentStep;
+						}else {
+							adjusted -= slowPercentStep;
+						}
+				 }
+			 }else if (Math.abs(previousPosition) >= (1- slowStartStop) && Math.abs(currentPosition) < previousPosition) {
+				 if(Math.abs(currentPosition - previousPosition) > slowPercentStep) {
+						if(currentPosition > previousPosition) {
+							adjusted += slowPercentStep;
+						}else {
+							adjusted -= slowPercentStep;
+						}
+				 }
+			 }
 		}
-	}else if (function == 2) {
-		 if(Math.abs(previousPosition) <= slowStartStop && Math.abs(currentPosition) > previousPosition) {
-			 if(Math.abs(currentPosition - previousPosition) > slowPercentStep) {
-					if(currentPosition > previousPosition) {
-						adjusted += slowPercentStep;
-					}else {
-						adjusted -= slowPercentStep;
-					}
-			 }
-		 }else if (Math.abs(previousPosition) >= (1- slowStartStop) && Math.abs(currentPosition) < previousPosition) {
-			 if(Math.abs(currentPosition - previousPosition) > slowPercentStep) {
-					if(currentPosition > previousPosition) {
-						adjusted += slowPercentStep;
-					}else {
-						adjusted -= slowPercentStep;
-					}
-			 }
-		 }
-	}
-	
+		
 		return adjusted;
 	}
 

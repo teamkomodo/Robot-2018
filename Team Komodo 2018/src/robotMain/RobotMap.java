@@ -37,6 +37,9 @@ public class RobotMap {
 	public static boolean isCompetitionBot = false;
 	public static boolean isReverseDrive = false;
 	
+	public static final double MAX_AMP = 300;
+	public static final double MAX_AMP_SOFT_STOP = 180;
+	
 	public static int leftJoystickPort = 1;
 	public static int rightJoystickPort = 0;
 	public static int switchDriveDirrection = 3;

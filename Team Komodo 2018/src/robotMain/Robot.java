@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj.CameraServer;
 //import edu.wpi.cscore.UsbCamera;
 //import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -55,6 +56,7 @@ public class Robot extends TimedRobot {
     public static DriveSystem driveSystem;
     public static ManipulatorSystem manipulatorSystem;
     public static LifterSystem lifterSystem;
+    public static PowerDistributionPanel pdp;
 
 	private static final int IMG_WIDTH = 640;
 	private static final int IMG_HEIGHT = 480;
@@ -75,6 +77,7 @@ public class Robot extends TimedRobot {
         driveSystem = new DriveSystem();
         manipulatorSystem = new ManipulatorSystem();
         lifterSystem = new LifterSystem();
+        pdp = new PowerDistributionPanel();
         
         // OI must be constructed after subsystems. If the OI creates Commands
         //(which it very likely will), subsystems are not guaranteed to be
@@ -125,6 +128,44 @@ public class Robot extends TimedRobot {
         scaleChooser.addObject("Scale", Boolean.TRUE);
         SmartDashboard.putData("Scale Override", scaleChooser);
 
+    }
+    
+    public static double getAmpAdjust() {
+    	double amperage = 0.0;//pdp.getTotalCurrent();
+    	double voltage = pdp.getVoltage();
+    	double temp = pdp.getTemperature();
+    	double energy = pdp.getTotalEnergy();
+    	double power = pdp.getTotalPower();
+//    	System.out.println("INFO: Brownout current 0 "+pdp.getCurrent(0));
+//    	System.out.println("INFO: Brownout current 1 "+pdp.getCurrent(1));
+//    	System.out.println("INFO: Brownout current 2 "+pdp.getCurrent(2));
+//    	System.out.println("INFO: Brownout current 3 "+pdp.getCurrent(3));
+//    	System.out.println("INFO: Brownout current 14 "+pdp.getCurrent(14));
+//    	System.out.println("INFO: Brownout current 15 "+pdp.getCurrent(15));
+    	double totalCurrent = 0.0;
+    	for (int i = 0; i < 16; ++i) {
+    		totalCurrent += pdp.getCurrent(i);
+    	}
+    	System.out.println("INFO: Brownout total current "+totalCurrent);
+    	amperage = totalCurrent;
+//		System.out.println("INFO: Brownout amperage: "+amperage);
+//		System.out.println("INFO: Brownout voltage: "+voltage);
+//		System.out.println("INFO: Brownout temp: "+temp);
+//		System.out.println("INFO: Brownout energy: "+energy);
+//		System.out.println("INFO: Brownout power: "+power);
+    	
+    	double adjust = 1.0;
+    	if (amperage >= RobotMap.MAX_AMP) {
+    		adjust = 0.0;
+    		System.out.println("ERROR: Brownout amperage limit reached!");
+    	}
+    	else if(amperage >=RobotMap.MAX_AMP_SOFT_STOP) {
+        	adjust = 1.0 - ( (amperage - RobotMap.MAX_AMP_SOFT_STOP) /
+        			(RobotMap.MAX_AMP - RobotMap.MAX_AMP_SOFT_STOP) );
+        	System.out.println("WARNING: Brownout amperage reaching limit: "+amperage);
+    	}
+
+    	return adjust;
     }
 
     /**
