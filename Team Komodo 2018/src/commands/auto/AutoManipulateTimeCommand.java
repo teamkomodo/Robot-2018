@@ -22,7 +22,7 @@ public class AutoManipulateTimeCommand extends AutoCommand{
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
-    	Robot.manipulatorSystem.getManipulatorController().set(-speed);
+    	Robot.manipulatorSystem.getLeftIntakeController().set(-speed);
     	
     }
 
@@ -30,7 +30,7 @@ public class AutoManipulateTimeCommand extends AutoCommand{
     @Override
     protected boolean isFinished() {
     	if (isTimedOut()) 
-        	Robot.manipulatorSystem.getManipulatorController().set(0);
+        	Robot.manipulatorSystem.getLeftIntakeController().set(0);
     	return isTimedOut();
     }
 }

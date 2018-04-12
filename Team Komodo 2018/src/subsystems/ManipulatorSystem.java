@@ -2,17 +2,22 @@ package subsystems;
 
 import commands.teleop.TeleopManipulatorCommand;
 import edu.wpi.first.wpilibj.PWMSpeedController;
+import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import robotMain.RobotMap;
 
 public class ManipulatorSystem extends Subsystem {
-	private PWMSpeedController manipulatorController;
+	private PWMSpeedController leftIntakeController;
+	private PWMSpeedController rightIntakeController;
+	private SpeedControllerGroup intakeControllers;
 	private PWMSpeedController rotatorController;
 	
 	public ManipulatorSystem() {
-		manipulatorController = new Victor(RobotMap.manipulatorControllerPort);
+		leftIntakeController = new Victor(RobotMap.intakeLeftControllerPort);
+		rightIntakeController = new Victor(RobotMap.intakeRightControllerPort);
+		intakeControllers = new SpeedControllerGroup(leftIntakeController, rightIntakeController);
 		if (RobotMap.isCompetitionBot) {
 			rotatorController = new Talon(RobotMap.rotatorControllerPort);
 		}
@@ -30,8 +35,14 @@ public class ManipulatorSystem extends Subsystem {
     public void periodic() {
     }
     
-    public PWMSpeedController getManipulatorController() {
-    	return manipulatorController;
+    public PWMSpeedController getLeftIntakeController() {
+    	return leftIntakeController;
+    }
+    public PWMSpeedController getRightIntakeController() {
+    	return rightIntakeController;
+    }
+    public SpeedControllerGroup getIntakeControllers() {
+    	return intakeControllers;
     }
     
     public PWMSpeedController getRotatorController() {

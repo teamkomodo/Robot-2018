@@ -41,6 +41,8 @@ public class OI {
 
     private Joystick gamepadL;
     private Joystick gamepadR;
+    private JoystickButton rightIntake;
+	private JoystickButton leftIntake;
 
     public OI() {
     	System.out.println("Hello OI");
@@ -77,7 +79,10 @@ public class OI {
         rotateManipulatorUp = new JoystickButton (gamepadL, RobotMap.gamepadLB);
         rotateManipulatorDown = new JoystickButton (gamepadL, RobotMap.gamepadRB);
         
-        halfSpeedOut = new JoystickButton(gamepadL, RobotMap.gamepadX);
+        halfSpeedOut = new JoystickButton(gamepadL, RobotMap.gamepadY);
+        
+        rightIntake = new JoystickButton(gamepadL, RobotMap.gamepadX);
+        leftIntake = new JoystickButton(gamepadL, RobotMap.gamepadA);
         
         RobotMap.isReverseDrive = false;
 
@@ -109,6 +114,12 @@ public class OI {
     
     public JoystickButton getHalfSpeedOut() {
     	return halfSpeedOut;
+    }
+    public JoystickButton getLeftIntake() {
+    	return leftIntake;
+    }
+    public JoystickButton getRightIntake() {
+    	return rightIntake;
     }
 }
 

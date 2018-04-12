@@ -9,7 +9,10 @@ public class AutoLiftTimeCommand extends AutoCommand{
 	
     public AutoLiftTimeCommand(double tCT) {
     	requires(Robot.lifterSystem);
-    	
+    	if(tCT < 0) {//input negative numbers to move lift down
+    		tCT*=-1;
+    		speed *= -1;
+    	}
         setTimeout(tCT);
     }
 

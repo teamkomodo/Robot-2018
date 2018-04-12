@@ -68,7 +68,8 @@ public class RobotMap {
 	public static int rightEncoderChannelB = 3;
 	
 	public static int lifterControllerPort = 2;
-	public static int manipulatorControllerPort = 3;
+	public static int intakeLeftControllerPort = 3;
+	public static int intakeRightControllerPort = 5;
 	public static int rotatorControllerPort = 4;
 	//public static int wenchServoPort = -1; // Not installed right now
 

@@ -13,6 +13,7 @@ public class AutoMiddleStartCommandGroup extends CommandGroup{
 	private double LIFT_TIME_S = 0;
 	private double END_DISTANCE_FT = 0;
 	private double MANIPULATE_TIME_S = 0;
+	private double FORWARD_TO_CUBE = 0;
 	
 	private double turnToScaleDegreesOne = 0;
 	private double turnToScaleDegreesTwo = 0;
@@ -33,5 +34,15 @@ public class AutoMiddleStartCommandGroup extends CommandGroup{
 		addSequential(new AutoLiftTimeCommand(LIFT_TIME_S));
 		addSequential(new AutoForwardDistanceCommand(END_DISTANCE_FT));
 		addSequential(new AutoManipulateTimeCommand(MANIPULATE_TIME_S));
+		//hopefully return to start position
+		addSequential(new AutoForwardDistanceCommand(-END_DISTANCE_FT));
+		addSequential(new AutoLiftTimeCommand(-LIFT_TIME_S));
+		addSequential(new AutoEncoderRotateWaitCommandGroup(-turnToScaleDegreesTwo));
+		addSequential(new AutoForwardDistanceCommand(-FORWARD_TWO_FT));
+		addSequential(new AutoEncoderRotateWaitCommandGroup(-turnToScaleDegreesOne));
+		addSequential(new AutoForwardDistanceCommand(-FORWARD_ONE_FT));
+		//get a cube?
+		addSequential(new AutoForwardDistanceCommand(FORWARD_TO_CUBE));
+		
 	}
 }
