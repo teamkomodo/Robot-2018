@@ -56,7 +56,7 @@ public class Robot extends TimedRobot {
     public static DriveSystem driveSystem;
     public static ManipulatorSystem manipulatorSystem;
     public static LifterSystem lifterSystem;
-    public static PowerDistributionPanel pdp;
+    //public static PowerDistributionPanel pdp;
 
 	private static final int IMG_WIDTH = 640;
 	private static final int IMG_HEIGHT = 480;
@@ -77,7 +77,7 @@ public class Robot extends TimedRobot {
         driveSystem = new DriveSystem();
         manipulatorSystem = new ManipulatorSystem();
         lifterSystem = new LifterSystem();
-        pdp = new PowerDistributionPanel();
+        //pdp = new PowerDistributionPanel();
         
         // OI must be constructed after subsystems. If the OI creates Commands
         //(which it very likely will), subsystems are not guaranteed to be
@@ -132,22 +132,22 @@ public class Robot extends TimedRobot {
     
     public static double getAmpAdjust() {
     	double amperage = 0.0;//pdp.getTotalCurrent();
-    	double voltage = pdp.getVoltage();
-    	double temp = pdp.getTemperature();
-    	double energy = pdp.getTotalEnergy();
-    	double power = pdp.getTotalPower();
+//    	double voltage = pdp.getVoltage();
+//    	double temp = pdp.getTemperature();
+//    	double energy = pdp.getTotalEnergy();
+//    	double power = pdp.getTotalPower();
 //    	System.out.println("INFO: Brownout current 0 "+pdp.getCurrent(0));
 //    	System.out.println("INFO: Brownout current 1 "+pdp.getCurrent(1));
 //    	System.out.println("INFO: Brownout current 2 "+pdp.getCurrent(2));
 //    	System.out.println("INFO: Brownout current 3 "+pdp.getCurrent(3));
 //    	System.out.println("INFO: Brownout current 14 "+pdp.getCurrent(14));
 //    	System.out.println("INFO: Brownout current 15 "+pdp.getCurrent(15));
-    	double totalCurrent = 0.0;
-    	for (int i = 0; i < 16; ++i) {
-    		totalCurrent += pdp.getCurrent(i);
-    	}
-    	System.out.println("INFO: Brownout total current "+totalCurrent);
-    	amperage = totalCurrent;
+//    	double totalCurrent = 0.0;
+//    	for (int i = 0; i < 16; ++i) {
+//    		totalCurrent += pdp.getCurrent(i);
+//    	}
+//    	System.out.println("INFO: Brownout total current "+totalCurrent);
+//    	amperage = totalCurrent;
 //		System.out.println("INFO: Brownout amperage: "+amperage);
 //		System.out.println("INFO: Brownout voltage: "+voltage);
 //		System.out.println("INFO: Brownout temp: "+temp);
@@ -194,14 +194,17 @@ public class Robot extends TimedRobot {
         if (teleopManipulatorCommand != null) teleopManipulatorCommand.cancel();
 
         //autonomousCommand = (Command) chooser.getSelected();
-        boolean useDashboard = SmartDashboard.getBoolean("DB/Button 0", false);
+        boolean useDashboard = SmartDashboard.getBoolean("DB/Button 0", true);
         POSITION start;
         Boolean scale;
         
         if(useDashboard) {
         	System.out.println("Use Dashboard");
-        	start = positionChooser.getSelected();
-        	scale = scaleChooser.getSelected();
+        	start = position(SmartDashboard.getString("DB/String 0", "hello"));
+        	scale = SmartDashboard.getBoolean("DB/Button 1", false);
+        	
+        	SmartDashboard.putString("DB/String 5", ("Start: " + start));
+        	SmartDashboard.putString("DB/String 6", "Scale: " + scale);
         }else {//default values: change these if the SmartDashboard is being dumb.
         	System.out.println("Use Default");
         	start = POSITION.LEFT;
@@ -209,16 +212,28 @@ public class Robot extends TimedRobot {
         }
     	System.out.println("gameData = "+gameData);
 
-        //autonomousCommand = chooseCommand(start, scale, 
-        	//	getSide(gameData),
-        		//getSide(gameData.substring(1)));
-    	autonomousCommand = chooseCommand(POSITION.RIGHT, true, getSide(gameData), getSide(gameData.substring(1)));
+        autonomousCommand = chooseCommand(start, scale, 
+        		getSide(gameData),
+        		getSide(gameData.substring(1)));
+    	//autonomousCommand = chooseCommand(POSITION.RIGHT, true, getSide(gameData), getSide(gameData.substring(1)));
     	//chooseCommand(start, scale, getSide(gameData), getSide(gameData.substring(1)));
     	//autonomousCommand = new AutoLineCommandGroup();
+        autonomousCommand = null;
         if (autonomousCommand != null) autonomousCommand.start();
     }
 
-    private POSITION getSide(String gameData) {
+    //converts a string input from the driver station into an ENUM position
+    private POSITION position(String position) {
+		position.toLowerCase();
+		System.out.println(position);
+		POSITION start = POSITION.LEFT;
+		if(position.startsWith("r")) {
+			start = POSITION.RIGHT;
+		}
+		return start;
+	}
+
+	private POSITION getSide(String gameData) {
     	POSITION position = POSITION.RIGHT;
 		if (gameData.startsWith("L")) {
     		position = POSITION.LEFT;
@@ -277,10 +292,10 @@ public class Robot extends TimedRobot {
     		}else {
     			if (startPosition.equals(scaleSide)) {//go to same side scale
     	    		if (startPosition.equals(POSITION.LEFT)) {
-    	    			System.out.println("Scale override, Left");
+    	    			System.out.println("Scale, Left");
     	    			autoCommand = new AutoSameSideCommandGroup("left","scale");
     	    		} else {
-    	    			System.out.println("Scale override, Right");
+    	    			System.out.println("Scale, Right");
     	    			autoCommand = new AutoSameSideCommandGroup("right","scale");
     	    		}
     	    	}else{

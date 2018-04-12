@@ -41,7 +41,7 @@ public class TeleopLiftCommand extends Command {
     protected void execute() {
     	int channel1 = 14;
     	int channel2 = 15;
-    	double liftTotalCurrent = Robot.pdp.getCurrent(channel1) + Robot.pdp.getCurrent(channel1);
+    	//double liftTotalCurrent = Robot.pdp.getCurrent(channel1) + Robot.pdp.getCurrent(channel1);
     	// TODO: limit lifter motors so we don't burn them up
     	lifterController.set(gamepadL.getY() * Robot.getAmpAdjust());
     }

@@ -59,7 +59,7 @@ public class TeleopDriveCommand extends Command {
     	double currentLY = calculateAdjustedJoystickPosition( leftJoystick.getY(), leftYValue) * Robot.getAmpAdjust();
     	double currentRY = calculateAdjustedJoystickPosition(rightJoystick.getY(), rightYValue) * Robot.getAmpAdjust();
     	
-    	System.out.println("Drive type = "+driveSystem.getDriveType());
+//    	System.out.println("Drive type = "+driveSystem.getDriveType());
 
     	switch (driveSystem.getDriveType()) {
     	case TANK:

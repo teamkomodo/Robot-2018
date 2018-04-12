@@ -11,6 +11,6 @@ public class AutoLineCommandGroup extends CommandGroup{
 	
 	public AutoLineCommandGroup() {
 		addSequential (new AutoDriveWaitTimeCommand(10));
-		//addSequential (new AutoGyroForwardCommand(forward));
+		addSequential (new AutoGyroForwardCommand(forward));
 	}
 }
