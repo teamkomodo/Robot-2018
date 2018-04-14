@@ -8,6 +8,7 @@ import commands.auto.AutoLiftTimeCommand;
 import commands.auto.AutoManipulateTimeCommand;
 import commands.auto.AutoEncoderRotateCommand;
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import robotMain.Robot.POSITION;
 
 public class AutoMiddleStartCommandGroup extends CommandGroup{
 	private double FORWARD_ONE_FT = 2.5;
@@ -22,10 +23,12 @@ public class AutoMiddleStartCommandGroup extends CommandGroup{
 	private double turnToSwitchDegreesOne = -45;
 	private double turnToSwitchDegreesTwo = 45;
 	
-	public AutoMiddleStartCommandGroup(String side) {//add parameter to determine side
-		if (side.equals("right")) {
+
+	public AutoMiddleStartCommandGroup(POSITION side) {//add parameter to determine side
+		if (side.equals(POSITION.RIGHT)) {
 			turnToSwitchDegreesOne *= -1;
 			turnToSwitchDegreesTwo *= -1;
+
 		}
 		constructCommandGroup();
 	}

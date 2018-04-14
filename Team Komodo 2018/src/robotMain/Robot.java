@@ -103,7 +103,7 @@ public class Robot extends TimedRobot {
         */
         
         //autonomousCommand = new AutoTestCommandGroup();
-        autonomousCommand = new AutoSameSideCommandGroup("left", "scale");
+        autonomousCommand = new AutoSameSideCommandGroup(POSITION.LEFT, true);
         
         teleopDriveCommand = new TeleopDriveCommand();
         teleopLiftCommand = new TeleopLiftCommand();
@@ -277,35 +277,35 @@ public class Robot extends TimedRobot {
     	System.out.println("Scale Override = "+(scaleOverride?"True":"False"));
     	if(startPosition.equals(POSITION.CENTER)) {
     		if(switchSide.equals(POSITION.LEFT)) {
-    			autoCommand = new AutoMiddleStartCommandGroup("left");
+    			autoCommand = new AutoMiddleStartCommandGroup(POSITION.LEFT);
     		}else {
-    			autoCommand = new AutoMiddleStartCommandGroup("right");
+    			autoCommand = new AutoMiddleStartCommandGroup(POSITION.RIGHT);
     		}
     	}else if (scaleOverride && startPosition.equals(scaleSide)) {//go to same side scale
     		if (startPosition.equals(POSITION.LEFT)) {
     			System.out.println("Scale override, Left");
-    			autoCommand = new AutoSameSideCommandGroup("left","scale");
+    			autoCommand = new AutoSameSideCommandGroup(POSITION.LEFT, true);
     		} else {
     			System.out.println("Scale override, Right");
-    			autoCommand = new AutoSameSideCommandGroup("right","scale");
+    			autoCommand = new AutoSameSideCommandGroup(POSITION.RIGHT, true);
     		}
     	} else {
     		if(startPosition.equals(switchSide)) {//deliver to same side of switch
     			if(startPosition.equals(POSITION.LEFT)) {
         			System.out.println("Switch, Left");//matt was here
-    				autoCommand = new AutoSameSideCommandGroup("left","switch");
+    				autoCommand = new AutoSameSideCommandGroup(POSITION.LEFT, false);
     			}else {
         			System.out.println("Switch, Right");
-    				autoCommand = new AutoSameSideCommandGroup("right","switch");
+    				autoCommand = new AutoSameSideCommandGroup(POSITION.RIGHT, false);
     			}
     		}else {
     			if (startPosition.equals(scaleSide)) {//go to same side scale
     	    		if (startPosition.equals(POSITION.LEFT)) {
     	    			System.out.println("Scale, Left");
-    	    			autoCommand = new AutoSameSideCommandGroup("left","scale");
+    	    			autoCommand = new AutoSameSideCommandGroup(POSITION.LEFT, true);
     	    		} else {
     	    			System.out.println("Scale, Right");
-    	    			autoCommand = new AutoSameSideCommandGroup("right","scale");
+    	    			autoCommand = new AutoSameSideCommandGroup(POSITION.RIGHT, true);
     	    		}
     	    	}else{
     				System.out.println("Forward");
@@ -313,7 +313,7 @@ public class Robot extends TimedRobot {
     	    	}
 			}
     	}
-    	autoCommand = new AutoMiddleStartCommandGroup("right");
+    	//autoCommand = new AutoMiddleStartCommandGroup(POSITION.RIGHT);
     	return autoCommand;
     }
 }
