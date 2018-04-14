@@ -8,6 +8,7 @@ import commands.auto.AutoLiftTimeCommand;
 import commands.auto.AutoManipulateTimeCommand;
 import commands.auto.AutoEncoderRotateCommand;
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import robotMain.Robot.POSITION;
 
 public class AutoSameSideCommandGroup extends CommandGroup{
 	private double LIFT_TIME_S = 5.5;
@@ -18,8 +19,8 @@ public class AutoSameSideCommandGroup extends CommandGroup{
 	private boolean useL = true; //false;
 	private boolean useR = true;
 	
-	public AutoSameSideCommandGroup(String side, String goal) {
-		if(goal.equals("switch")) {
+	public AutoSameSideCommandGroup(POSITION side, Boolean scale) {
+		if(!scale) {
 			turnToGoalDegrees = 90;
 			//startFT = 168/12.0;
 			startFT = 10.5;
@@ -28,9 +29,9 @@ public class AutoSameSideCommandGroup extends CommandGroup{
 			useL = true;
 			useR = true;
 		}
-		if (side.equals("right")) {
+		if (side.equals(POSITION.RIGHT)) {
 			turnToGoalDegrees *= -1;
-			if (!goal.equals("switch")) {
+			if (scale) {
 				useL = true;
 				useR = true;//false;
 			}

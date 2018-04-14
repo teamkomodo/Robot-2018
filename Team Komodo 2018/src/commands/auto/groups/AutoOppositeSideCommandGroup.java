@@ -6,6 +6,7 @@ import commands.auto.AutoLiftTimeCommand;
 import commands.auto.AutoManipulateTimeCommand;
 import commands.auto.AutoEncoderRotateCommand;
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import robotMain.Robot.POSITION;
 
 public class AutoOppositeSideCommandGroup extends CommandGroup{
 	private double LIFT_TIME_S = 0;
@@ -19,11 +20,11 @@ public class AutoOppositeSideCommandGroup extends CommandGroup{
 	private double finalApproachFT = 0;
 	private double finalTurnDegrees = 0;
 	
-	public AutoOppositeSideCommandGroup(String side, String goal) {//add parameter to determine side
-		if (side.equals("right")) {
+	public AutoOppositeSideCommandGroup(POSITION side, Boolean scale) {//add parameter to determine side
+		if (side.equals(POSITION.RIGHT)) {
 			turnToGoalDegrees *= -1;
 		}
-		if(goal.equals("scale")) {
+		if(scale) {
 			START_FT = 0;
 			finalApproachFT = 0;
 			finalTurnDegrees *= -1;
