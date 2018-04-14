@@ -1,5 +1,6 @@
 package commands.auto;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import robotMain.Robot;
 import subsystems.AutoController;
 
@@ -57,12 +58,14 @@ public class AutoGyroRotateCommand extends AutoCommand {
     // Make this return true when this Command no longer needs to run execute()
     @Override
     protected boolean isFinished() {
-    	System.out.println("Gyro Log: "+ controller.getAngle() + " " + degreeRotation);
+    	//System.out.println("Gyro Log: "+ controller.getAngle() + " " + degreeRotation);
+
     	//if (Math.abs(controller.getAngle()) > Math.abs(degreeRotation))
     	double currAngle = controller.getAngle();
     	if (Math.abs(controller.getAngle()) > Math.abs(degreeRotation)
     		&& currAngle/Math.abs(currAngle)==degreeRotation/Math.abs(degreeRotation)) {
     		controller.tank(0, 0);
+        	SmartDashboard.putString("DB/String 8", "Gyro: " + controller.getAngle() + "/" + degreeRotation);
     		return true;    		
     	}
     	return false;

@@ -1,5 +1,6 @@
 package commands.auto;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import robotMain.Robot;
 
 public class AutoForwardDistanceCommand extends AutoCommand {
@@ -40,13 +41,16 @@ public class AutoForwardDistanceCommand extends AutoCommand {
     // Make this return true when this Command no longer needs to run execute()
     @Override
     protected boolean isFinished() {
-    	System.out.println(startValue+" "+encoderValue+" "+stopValue);
+    	//System.out.println(startValue+" "+encoderValue+" "+stopValue);
+
     	if (stopValue>startValue) {
     		if (encoderValue>stopValue) {
+    	    	SmartDashboard.putString("DB/String 7", "Encoder: " + encoderValue + "/" + stopValue);
     			return true;
     		}
     	} else {
     		if (encoderValue<stopValue) {
+    	    	SmartDashboard.putString("DB/String 7", "Encoder: " + encoderValue + "/" + stopValue);
     			return true;
     		}
     	}

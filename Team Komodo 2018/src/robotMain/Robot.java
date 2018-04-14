@@ -56,7 +56,7 @@ public class Robot extends TimedRobot {
     public static DriveSystem driveSystem;
     public static ManipulatorSystem manipulatorSystem;
     public static LifterSystem lifterSystem;
-    public static PowerDistributionPanel pdp;
+    //public static PowerDistributionPanel pdp;
 
 	private static final int IMG_WIDTH = 640;
 	private static final int IMG_HEIGHT = 480;
@@ -74,11 +74,15 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void robotInit() {
+    	SmartDashboard.putString("DB/String 5", (""));
+    	SmartDashboard.putString("DB/String 6", (""));
+    	SmartDashboard.putString("DB/String 7", (""));
+    	SmartDashboard.putString("DB/String 8", (""));
+
         driveSystem = new DriveSystem();
         manipulatorSystem = new ManipulatorSystem();
         lifterSystem = new LifterSystem();
         //pdp = new PowerDistributionPanel();
-        
         
         // OI must be constructed after subsystems. If the OI creates Commands
         //(which it very likely will), subsystems are not guaranteed to be
@@ -193,9 +197,10 @@ public class Robot extends TimedRobot {
     	//if (teleopDriveCommand != null) teleopDriveCommand.cancel();
         if (teleopLiftCommand != null) teleopLiftCommand.cancel();
         if (teleopManipulatorCommand != null) teleopManipulatorCommand.cancel();
+        if(autonomousCommand != null) autonomousCommand.cancel();
 
         //autonomousCommand = (Command) chooser.getSelected();
-        boolean useDashboard = SmartDashboard.getBoolean("DB/Button 0", true);
+        boolean useDashboard = SmartDashboard.getBoolean("DB/Button 0", false);
         POSITION start;
         Boolean scale;
         
@@ -225,12 +230,13 @@ public class Robot extends TimedRobot {
 
     //converts a string input from the driver station into an ENUM position
     private POSITION position(String position) {
-		position.toLowerCase();
+		//position= position.toUpperCase();
 		System.out.println(position);
 		POSITION start = POSITION.CENTER;
-		if(position.startsWith("r")) {
+		if(position.toUpperCase().startsWith("R")) {
 			start = POSITION.RIGHT;
-		}else if (position.startsWith("l")) {
+		}
+		else if(position.toUpperCase().startsWith("L")) {
 			start = POSITION.LEFT;
 		}
 		return start;
@@ -313,7 +319,7 @@ public class Robot extends TimedRobot {
     	    	}
 			}
     	}
-    	//autoCommand = new AutoMiddleStartCommandGroup(POSITION.RIGHT);
+    	//autoCommand = new AutoSameSideCommandGroup("right", "switch");
     	return autoCommand;
     }
 }

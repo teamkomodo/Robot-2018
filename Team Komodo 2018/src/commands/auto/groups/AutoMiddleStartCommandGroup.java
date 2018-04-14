@@ -14,17 +14,19 @@ public class AutoMiddleStartCommandGroup extends CommandGroup{
 	private double FORWARD_ONE_FT = 2.5;
 	private double FORWARD_TWO_FT = 5.5;
 	private double LIFT_TIME_S = 2;
-	private double END_DISTANCE_FT = 1.5;
+	private double END_DISTANCE_FT = 1;
 	private double MANIPULATE_TIME_S = 1;
 	private double BACKWARD_TO_CUBE = -3;
 	private double INTAKE_FOR_CUBE = -4;
 	private double FORWARD_TO_CUBE = 4;
 	
-	private double turnToSwitchDegreesOne = -45;
-	private double turnToSwitchDegreesTwo = 45;
+	private double turnToSwitchDegreesOne;// = -45;
+	private double turnToSwitchDegreesTwo;// = 45;
 	
 
 	public AutoMiddleStartCommandGroup(POSITION side) {//add parameter to determine side
+		turnToSwitchDegreesOne = 45;
+		turnToSwitchDegreesTwo = -45;
 		if (side.equals(POSITION.RIGHT)) {
 			turnToSwitchDegreesOne *= -1;
 			turnToSwitchDegreesTwo *= -1;
@@ -52,7 +54,7 @@ public class AutoMiddleStartCommandGroup extends CommandGroup{
 		//score cube
 		addSequential (new AutoLiftTimeCommand(0.25));
 		addSequential (new AutoGyroForwardCommand(-FORWARD_TO_CUBE));
-		addSequential (new AutoGyroRotateCommand(-turnToSwitchDegreesTwo));
+		addSequential (new AutoGyroRotateCommand(turnToSwitchDegreesOne));
 		addSequential (new AutoLiftTimeCommand(LIFT_TIME_S));
 		addSequential (new AutoGyroForwardCommand(-BACKWARD_TO_CUBE));
 	}
