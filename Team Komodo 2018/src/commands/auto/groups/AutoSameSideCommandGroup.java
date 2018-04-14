@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 import robotMain.Robot.POSITION;
 
 public class AutoSameSideCommandGroup extends CommandGroup{
-	private double LIFT_TIME_S = 5.5;
+	private double LIFT_TIME_S = 5;
 	private double MANIPULATE_TIME_S = 1;
 	
 	private double startFT = 24;
@@ -24,7 +24,7 @@ public class AutoSameSideCommandGroup extends CommandGroup{
 			turnToGoalDegrees = 90;
 			//startFT = 168/12.0;
 			startFT = 10.5;
-			LIFT_TIME_S = 0;
+			LIFT_TIME_S = 2;
 			
 			useL = true;
 			useR = true;
@@ -48,13 +48,14 @@ public class AutoSameSideCommandGroup extends CommandGroup{
 		
 		addSequential(new AutoGyroForwardCommand(startFT, 0.75));
 		//addSequential(new AutoForwardDistanceCommand(startFT));
-		addSequential(new AutoDriveWaitTimeCommand(1));
+		addSequential(new AutoDriveWaitTimeCommand(.25));
+		addSequential(new AutoLiftTimeCommand(LIFT_TIME_S));
 		addSequential(new AutoGyroRotateCommand(turnToGoalDegrees, useL, useR));
 		//addSequential(new AutoGyroRotateCommand(turnToGoalDegrees));
-		addSequential(new AutoDriveWaitTimeCommand(1));
-		addSequential(new AutoLiftTimeCommand(LIFT_TIME_S));
+		addSequential(new AutoDriveWaitTimeCommand(.25));
+		//addSequential(new AutoLiftTimeCommand(LIFT_TIME_S));
 		addSequential(new AutoGyroForwardCommand(1, 0.6));
-		addSequential (new AutoDriveWaitTimeCommand(1));
+		addSequential (new AutoDriveWaitTimeCommand(.25));
 		addSequential(new AutoManipulateTimeCommand(MANIPULATE_TIME_S));
 	}
 }

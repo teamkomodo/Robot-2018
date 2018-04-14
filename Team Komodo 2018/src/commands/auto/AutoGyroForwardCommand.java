@@ -67,7 +67,7 @@ public class AutoGyroForwardCommand extends AutoCommand {
     // Make this return true when this Command no longer needs to run execute()
     @Override
     protected boolean isFinished() {
-    	System.out.println(startValue + " " + encoderValue + " " + stopValue);
+    	//System.out.println(startValue + " " + encoderValue + " " + stopValue);
     	if (stopValue>startValue) {
     		if (encoderValue>stopValue) {
     			controller.arcade(0, 0);
