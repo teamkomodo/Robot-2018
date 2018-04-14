@@ -11,20 +11,24 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 import robotMain.Robot.POSITION;
 
 public class AutoSameSideCommandGroup extends CommandGroup{
-	private double LIFT_TIME_S = 5;
 	private double MANIPULATE_TIME_S = 1;
 	
-	private double startFT = 24;
-	private double turnToGoalDegrees = 80;
-	private boolean useL = true; //false;
-	private boolean useR = true;
+	private double liftTimeS = 5;
+	private double startFT;
+	private double turnToGoalDegrees;
+	private boolean useL;
+	private boolean useR;
 	
 	public AutoSameSideCommandGroup(POSITION side, Boolean scale) {
+		startFT = 24;
+		turnToGoalDegrees = 80;
+		useL = true; //false;
+		useR = true;
 		if(!scale) {
 			turnToGoalDegrees = 90;
 			//startFT = 168/12.0;
 			startFT = 10.5;
-			LIFT_TIME_S = 2;
+			liftTimeS = 2;
 			
 			useL = true;
 			useR = true;
@@ -49,7 +53,7 @@ public class AutoSameSideCommandGroup extends CommandGroup{
 		addSequential(new AutoGyroForwardCommand(startFT, 0.75));
 		//addSequential(new AutoForwardDistanceCommand(startFT));
 		addSequential(new AutoDriveWaitTimeCommand(.25));
-		addSequential(new AutoLiftTimeCommand(LIFT_TIME_S));
+		addSequential(new AutoLiftTimeCommand(liftTimeS));
 		addSequential(new AutoGyroRotateCommand(turnToGoalDegrees, useL, useR));
 		//addSequential(new AutoGyroRotateCommand(turnToGoalDegrees));
 		addSequential(new AutoDriveWaitTimeCommand(.25));
