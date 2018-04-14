@@ -53,6 +53,7 @@ public class TeleopDriveCommand extends Command {
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
+    	
 
     	double currentLX = calculateAdjustedJoystickPosition(leftJoystick.getX(), leftXValue) * Robot.getAmpAdjust();
     	double currentRX = calculateAdjustedJoystickPosition(rightJoystick.getX(), rightXValue) * Robot.getAmpAdjust();

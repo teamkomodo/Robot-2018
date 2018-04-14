@@ -7,8 +7,8 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class AutoEncoderRotateWaitCommandGroup extends CommandGroup{
 
 	public AutoEncoderRotateWaitCommandGroup(double rotate) {
-		addSequential(new AutoDriveWaitTimeCommand(0.5));
+		addSequential(new AutoDriveWaitTimeCommand(0.25));
 		addSequential(new AutoEncoderRotateCommand(rotate));
-		addSequential(new AutoDriveWaitTimeCommand(0.5));
+		addSequential(new AutoDriveWaitTimeCommand(0.25));
 	}
 }

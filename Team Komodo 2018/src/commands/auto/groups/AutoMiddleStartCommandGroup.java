@@ -2,47 +2,55 @@ package commands.auto.groups;
 
 import commands.auto.AutoDriveWaitTimeCommand;
 import commands.auto.AutoForwardDistanceCommand;
+import commands.auto.AutoGyroForwardCommand;
+import commands.auto.AutoGyroRotateCommand;
 import commands.auto.AutoLiftTimeCommand;
 import commands.auto.AutoManipulateTimeCommand;
 import commands.auto.AutoEncoderRotateCommand;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 public class AutoMiddleStartCommandGroup extends CommandGroup{
-	private double FORWARD_ONE_FT = 0;
-	private double FORWARD_TWO_FT = 0;
-	private double LIFT_TIME_S = 0;
-	private double END_DISTANCE_FT = 0;
-	private double MANIPULATE_TIME_S = 0;
-	private double FORWARD_TO_CUBE = 0;
+	private double FORWARD_ONE_FT = 2.5;
+	private double FORWARD_TWO_FT = 5.5;
+	private double LIFT_TIME_S = 2;
+	private double END_DISTANCE_FT = 1.5;
+	private double MANIPULATE_TIME_S = 1;
+	private double BACKWARD_TO_CUBE = -3;
+	private double INTAKE_FOR_CUBE = -4;
+	private double FORWARD_TO_CUBE = 4;
 	
-	private double turnToScaleDegreesOne = 0;
-	private double turnToScaleDegreesTwo = 0;
+	private double turnToSwitchDegreesOne = -45;
+	private double turnToSwitchDegreesTwo = 45;
 	
 	public AutoMiddleStartCommandGroup(String side) {//add parameter to determine side
 		if (side.equals("right")) {
-			turnToScaleDegreesOne *= -1;
-			turnToScaleDegreesTwo *= -1;
+			turnToSwitchDegreesOne *= -1;
+			turnToSwitchDegreesTwo *= -1;
 		}
 		constructCommandGroup();
 	}
 	private void constructCommandGroup() {
 		addSequential(new AutoDriveWaitTimeCommand());
-		addSequential(new AutoForwardDistanceCommand(FORWARD_ONE_FT));
-		addSequential(new AutoEncoderRotateWaitCommandGroup(turnToScaleDegreesOne));
-		addSequential(new AutoForwardDistanceCommand(FORWARD_TWO_FT));
-		addSequential(new AutoEncoderRotateWaitCommandGroup(turnToScaleDegreesTwo));
-		addSequential(new AutoLiftTimeCommand(LIFT_TIME_S));
-		addSequential(new AutoForwardDistanceCommand(END_DISTANCE_FT));
+		addSequential(new AutoGyroForwardCommand(FORWARD_ONE_FT));
+		addSequential(new AutoGyroRotateCommand(turnToSwitchDegreesOne));
+		addParallel(new AutoLiftTimeCommand(LIFT_TIME_S));
+		addSequential(new AutoGyroForwardCommand(FORWARD_TWO_FT/2.0));
+		addSequential(new AutoGyroForwardCommand(FORWARD_TWO_FT/2.0, 0.6));
+		addSequential(new AutoGyroRotateCommand(turnToSwitchDegreesTwo));
+		//addSequential(new AutoLiftTimeCommand(LIFT_TIME_S));
+		addSequential(new AutoGyroForwardCommand(END_DISTANCE_FT, 0.6));
 		addSequential(new AutoManipulateTimeCommand(MANIPULATE_TIME_S));
-		//hopefully return to start position
-		addSequential(new AutoForwardDistanceCommand(-END_DISTANCE_FT));
-		addSequential(new AutoLiftTimeCommand(-LIFT_TIME_S));
-		addSequential(new AutoEncoderRotateWaitCommandGroup(-turnToScaleDegreesTwo));
-		addSequential(new AutoForwardDistanceCommand(-FORWARD_TWO_FT));
-		addSequential(new AutoEncoderRotateWaitCommandGroup(-turnToScaleDegreesOne));
-		addSequential(new AutoForwardDistanceCommand(-FORWARD_ONE_FT));
-		//get a cube?
-		addSequential(new AutoForwardDistanceCommand(FORWARD_TO_CUBE));
-		
+		//get a cube
+		addSequential(new AutoGyroForwardCommand(BACKWARD_TO_CUBE));
+		addParallel(new AutoLiftTimeCommand(-LIFT_TIME_S*0.9));
+		addSequential(new AutoGyroRotateCommand(turnToSwitchDegreesTwo));
+		addParallel(new AutoManipulateTimeCommand(INTAKE_FOR_CUBE));
+		addSequential(new AutoGyroForwardCommand(FORWARD_TO_CUBE, 0.6));
+		//score cube
+		addSequential (new AutoLiftTimeCommand(0.25));
+		addSequential (new AutoGyroForwardCommand(-FORWARD_TO_CUBE));
+		addSequential (new AutoGyroRotateCommand(-turnToSwitchDegreesTwo));
+		addSequential (new AutoLiftTimeCommand(LIFT_TIME_S));
+		addSequential (new AutoGyroForwardCommand(-BACKWARD_TO_CUBE));
 	}
 }

@@ -52,12 +52,14 @@ public class TeleopManipulatorCommand extends Command {
 		if(halfSpeedOut.get()) {
     		intakeControllers.set(-speed);
     	}else if (rightIntake.get() || leftIntake.get()){
-    		//single-side intake.  Inclusive: can run both wheels in by pressing both buttons.
+    		//single-side intake.
     		speed = SINGLE_SIDE_INTAKE_SPEED;
     		if(rightIntake.get()) {
     			rightIntakeController.set(speed);
-    		}if(leftIntake.get()) {
+    			leftIntakeController.set(-speed);
+    		}else if(leftIntake.get()) {
     			leftIntakeController.set(speed);
+    			rightIntakeController.set(-speed);
     		}
     	}else {
     		intakeControllers.set(gamepadR.getY());

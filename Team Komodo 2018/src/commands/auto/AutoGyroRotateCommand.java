@@ -34,6 +34,7 @@ public class AutoGyroRotateCommand extends AutoCommand {
     @Override
     protected void initialize() {
     	controller.resetGyro();
+        controller.resetGyro();
     }
     
     // Called repeatedly when this Command is scheduled to run
@@ -42,10 +43,10 @@ public class AutoGyroRotateCommand extends AutoCommand {
     	double speed;
     	// Counter-Clockwise
     	if (degreeRotation > 0)
-    		speed = 0.75; //controller.getAutoSpeed();
+    		speed = -0.75; //controller.getAutoSpeed();
     	// Clockwise
     	else
-    		speed = -0.75;//-controller.getAutoSpeed();
+    		speed = 0.75;//-controller.getAutoSpeed();
     	
     	//controller.tank(speed, -speed);
     	double lSpeed = useLeft ? speed : 0;
@@ -56,8 +57,14 @@ public class AutoGyroRotateCommand extends AutoCommand {
     // Make this return true when this Command no longer needs to run execute()
     @Override
     protected boolean isFinished() {
-    	if (Math.abs(controller.getAngle()) > Math.abs(degreeRotation))
-    		return true;
+    	System.out.println("Gyro Log: "+ controller.getAngle() + " " + degreeRotation);
+    	//if (Math.abs(controller.getAngle()) > Math.abs(degreeRotation))
+    	double currAngle = controller.getAngle();
+    	if (Math.abs(controller.getAngle()) > Math.abs(degreeRotation)
+    		&& currAngle/Math.abs(currAngle)==degreeRotation/Math.abs(degreeRotation)) {
+    		controller.tank(0, 0);
+    		return true;    		
+    	}
     	return false;
     }
 }

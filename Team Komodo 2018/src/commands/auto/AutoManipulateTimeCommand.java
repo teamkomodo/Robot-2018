@@ -9,7 +9,10 @@ public class AutoManipulateTimeCommand extends AutoCommand{
 	
     public AutoManipulateTimeCommand(double tCT) {
     	requires(Robot.manipulatorSystem);
-    	
+    	if(tCT < 0) {//input negative numbers to move lift down
+    		tCT*=-1;
+    		speed *= -1;
+    	}
         setTimeout(tCT);
     }
 
@@ -22,7 +25,7 @@ public class AutoManipulateTimeCommand extends AutoCommand{
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
-    	Robot.manipulatorSystem.getLeftIntakeController().set(-speed);
+    	Robot.manipulatorSystem.getIntakeControllers().set(-speed);
     	
     }
 

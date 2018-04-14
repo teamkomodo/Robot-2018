@@ -56,7 +56,7 @@ public class Robot extends TimedRobot {
     public static DriveSystem driveSystem;
     public static ManipulatorSystem manipulatorSystem;
     public static LifterSystem lifterSystem;
-    //public static PowerDistributionPanel pdp;
+    public static PowerDistributionPanel pdp;
 
 	private static final int IMG_WIDTH = 640;
 	private static final int IMG_HEIGHT = 480;
@@ -78,6 +78,7 @@ public class Robot extends TimedRobot {
         manipulatorSystem = new ManipulatorSystem();
         lifterSystem = new LifterSystem();
         //pdp = new PowerDistributionPanel();
+        
         
         // OI must be constructed after subsystems. If the OI creates Commands
         //(which it very likely will), subsystems are not guaranteed to be
@@ -218,7 +219,7 @@ public class Robot extends TimedRobot {
     	//autonomousCommand = chooseCommand(POSITION.RIGHT, true, getSide(gameData), getSide(gameData.substring(1)));
     	//chooseCommand(start, scale, getSide(gameData), getSide(gameData.substring(1)));
     	//autonomousCommand = new AutoLineCommandGroup();
-        autonomousCommand = null;
+        //autonomousCommand = null;
         if (autonomousCommand != null) autonomousCommand.start();
     }
 
@@ -226,9 +227,11 @@ public class Robot extends TimedRobot {
     private POSITION position(String position) {
 		position.toLowerCase();
 		System.out.println(position);
-		POSITION start = POSITION.LEFT;
+		POSITION start = POSITION.CENTER;
 		if(position.startsWith("r")) {
 			start = POSITION.RIGHT;
+		}else if (position.startsWith("l")) {
+			start = POSITION.LEFT;
 		}
 		return start;
 	}
@@ -272,7 +275,13 @@ public class Robot extends TimedRobot {
     			+ switchSide.toString() + " " + scaleSide.toString());
     	Command autoCommand = null;
     	System.out.println("Scale Override = "+(scaleOverride?"True":"False"));
-    	if (scaleOverride && startPosition.equals(scaleSide)) {//go to same side scale
+    	if(startPosition.equals(POSITION.CENTER)) {
+    		if(switchSide.equals(POSITION.LEFT)) {
+    			autoCommand = new AutoMiddleStartCommandGroup("left");
+    		}else {
+    			autoCommand = new AutoMiddleStartCommandGroup("right");
+    		}
+    	}else if (scaleOverride && startPosition.equals(scaleSide)) {//go to same side scale
     		if (startPosition.equals(POSITION.LEFT)) {
     			System.out.println("Scale override, Left");
     			autoCommand = new AutoSameSideCommandGroup("left","scale");
@@ -304,7 +313,7 @@ public class Robot extends TimedRobot {
     	    	}
 			}
     	}
-    	//autoCommand = new AutoSameSideCommandGroup("right", "switch");
+    	autoCommand = new AutoMiddleStartCommandGroup("right");
     	return autoCommand;
     }
 }

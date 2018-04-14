@@ -6,12 +6,12 @@ import edu.wpi.first.wpilibj.interfaces.Gyro;
 import robotMain.RobotMap;
 
 public class AutoController {
-	private final double DEFAULT_SPEED = 0.6;
+	private final double DEFAULT_SPEED = 0.8;
     private final double ROBOT_DIAMETER_FT = 24.8/12;
     private final double FEET_TO_ENCODER_K = 5100;
     //private final double FEET_TO_ENCODER_LK = -5100; // when going forwards
     //private final double FEET_TO_ENCODER_RK = 4200; // when going backwards
-    private final double FEET_TO_ENCODER_K_P = -5100;
+    private final double FEET_TO_ENCODER_K_P = 5100;
 
     private double autoSpeed = DEFAULT_SPEED;
     

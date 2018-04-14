@@ -10,7 +10,7 @@ public class AutoGyroForwardCommand extends AutoCommand {
 	private int startValue;
 	private int encoderValue;
 	private int stopValue;
-	private double timerAdjustment = 1;
+	private double timerAdjustment = (2.0/3.0);
 	
 	private double dSpeed;
 	
@@ -22,9 +22,12 @@ public class AutoGyroForwardCommand extends AutoCommand {
         controller = Robot.driveSystem.getAutoController();
         distanceFT = distance;
         
-        setTimeout(distance/timerAdjustment);
-        
-        dSpeed = controller.getAutoSpeed();
+        setTimeout(Math.abs(distance/timerAdjustment));
+        if (distance < 0) {
+        	dSpeed = -controller.getAutoSpeed();
+        }else {
+        	dSpeed = controller.getAutoSpeed();
+        }
     }
     
     public AutoGyroForwardCommand(double distance, double speed) {
@@ -32,14 +35,14 @@ public class AutoGyroForwardCommand extends AutoCommand {
         controller = Robot.driveSystem.getAutoController();
         distanceFT = distance;
         
-        setTimeout(distance/timerAdjustment);
+        setTimeout(Math.abs(distance/timerAdjustment));
         
         dSpeed = speed;
     }
     
     private int getEncoderRaw() {
-		//return -Robot.driveSystem.getRightEncoderRaw();
-		return Robot.driveSystem.getLeftEncoderRaw();
+		return -Robot.driveSystem.getRightEncoderRaw();
+		//return Robot.driveSystem.getLeftEncoderRaw();
 	}
 
     // Called just before this Command runs the first time
@@ -64,13 +67,15 @@ public class AutoGyroForwardCommand extends AutoCommand {
     // Make this return true when this Command no longer needs to run execute()
     @Override
     protected boolean isFinished() {
-    	//System.out.println(startValue + " " + encoderValue + " " + stopValue);
+    	System.out.println(startValue + " " + encoderValue + " " + stopValue);
     	if (stopValue>startValue) {
     		if (encoderValue>stopValue) {
+    			controller.arcade(0, 0);
     			return true;
     		}
     	} else {
     		if (encoderValue<stopValue) {
+    			controller.arcade(0, 0);
     			return true;
     		}
     	}
