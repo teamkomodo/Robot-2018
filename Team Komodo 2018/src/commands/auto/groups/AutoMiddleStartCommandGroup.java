@@ -39,11 +39,11 @@ public class AutoMiddleStartCommandGroup extends CommandGroup{
 		addSequential(new AutoGyroForwardCommand(FORWARD_ONE_FT));
 		addSequential(new AutoGyroRotateCommand(turnToSwitchDegreesOne));
 		addParallel(new AutoLiftTimeCommand(LIFT_TIME_S));
-		addSequential(new AutoGyroForwardCommand(FORWARD_TWO_FT/2.0));
+		addSequential(new AutoGyroForwardCommand(FORWARD_TWO_FT));
 		//addSequential(new AutoGyroForwardCommand(FORWARD_TWO_FT/2.0, 0.6));
 		addSequential(new AutoGyroRotateCommand(turnToSwitchDegreesTwo));
 		//addSequential(new AutoLiftTimeCommand(LIFT_TIME_S));
-		addSequential(new AutoGyroForwardCommand(END_DISTANCE_FT, 0.6));
+		addSequential(new AutoGyroForwardCommand(END_DISTANCE_FT));
 		addSequential(new AutoManipulateTimeCommand(MANIPULATE_TIME_S));
 		//get a cube
 		addSequential(new AutoGyroForwardCommand(BACKWARD_TO_CUBE));

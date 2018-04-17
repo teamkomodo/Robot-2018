@@ -18,6 +18,7 @@ public class AutoSameSideCommandGroup extends CommandGroup{
 	private double turnToGoalDegrees;
 	private boolean useL;
 	private boolean useR;
+	private double finalApproach = 1;
 	
 	public AutoSameSideCommandGroup(POSITION side, Boolean scale) {
 		liftTimeS = 5.5;
@@ -59,7 +60,7 @@ public class AutoSameSideCommandGroup extends CommandGroup{
 		//addSequential(new AutoGyroRotateCommand(turnToGoalDegrees));
 		addSequential(new AutoDriveWaitTimeCommand(.25));
 		//addSequential(new AutoLiftTimeCommand(LIFT_TIME_S));
-		addSequential(new AutoGyroForwardCommand(1, 0.6));
+		addSequential(new AutoGyroForwardCommand(finalApproach));
 		addSequential (new AutoDriveWaitTimeCommand(.25));
 		addSequential(new AutoManipulateTimeCommand(MANIPULATE_TIME_S));
 	}
