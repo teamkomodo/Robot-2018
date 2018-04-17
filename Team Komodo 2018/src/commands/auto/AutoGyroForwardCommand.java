@@ -10,7 +10,7 @@ public class AutoGyroForwardCommand extends AutoCommand {
 	private int startValue;
 	private int encoderValue;
 	private int stopValue;
-	private double timerAdjustment = (2.0/3.0);
+	private double timerAdjustment = 1;
 	private double slower = 1;
 	
 	private double dSpeed;

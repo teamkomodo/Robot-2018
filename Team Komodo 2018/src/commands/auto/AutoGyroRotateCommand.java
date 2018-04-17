@@ -67,6 +67,7 @@ public class AutoGyroRotateCommand extends AutoCommand {
     	if (Math.abs(controller.getAngle()) > Math.abs(degreeRotation)
     		&& currAngle/Math.abs(currAngle)==degreeRotation/Math.abs(degreeRotation)) {
     		controller.tank(0, 0);
+        	SmartDashboard.putString("DB/String 8", "Gyro: " + controller.getAngle() + "/" + degreeRotation);
     		return true;    		
     	}else if ((Math.abs(controller.getAngle()) - Math.abs(degreeRotation) < degreeSlower)
         		&& currAngle/Math.abs(currAngle)==degreeRotation/Math.abs(degreeRotation)) {

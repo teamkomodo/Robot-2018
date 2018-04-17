@@ -14,7 +14,7 @@ public class AutoMiddleStartCommandGroup extends CommandGroup{
 	private double FORWARD_ONE_FT = 2.5;
 	private double FORWARD_TWO_FT = 5.5;
 	private double LIFT_TIME_S = 2;
-	private double END_DISTANCE_FT = 1.5;
+	private double END_DISTANCE_FT = 1;
 	private double MANIPULATE_TIME_S = 1;
 	private double BACKWARD_TO_CUBE = -3;
 	private double INTAKE_FOR_CUBE = -4;

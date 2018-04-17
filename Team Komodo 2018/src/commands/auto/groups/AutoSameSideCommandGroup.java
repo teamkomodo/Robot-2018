@@ -20,7 +20,7 @@ public class AutoSameSideCommandGroup extends CommandGroup{
 	private boolean useR;
 	
 	public AutoSameSideCommandGroup(POSITION side, Boolean scale) {
-		liftTimeS = 5;
+		liftTimeS = 5.5;
 		startFT = 24;
 		turnToGoalDegrees = -80;
 		useL = true; //false;

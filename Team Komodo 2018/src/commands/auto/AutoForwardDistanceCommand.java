@@ -9,6 +9,7 @@ public class AutoForwardDistanceCommand extends AutoCommand {
 	private int encoderValue;
 	private int stopValue;
 	double speed;
+	double slower = 1;
 	private double timerAdjustment = 7.0;
 	
     public AutoForwardDistanceCommand(double dFT) {
@@ -47,6 +48,7 @@ public class AutoForwardDistanceCommand extends AutoCommand {
 
     	if (stopValue>startValue) {
     		if (encoderValue>stopValue) {
+    	    	SmartDashboard.putString("DB/String 7", "Encoder: " + encoderValue + "/" + stopValue);
     			return true;
     		}else if((Math.abs(stopValue)-Math.abs(encoderValue)) > controller.feetToEncoder(slower)) {
     			speed = 0.5;
@@ -54,6 +56,7 @@ public class AutoForwardDistanceCommand extends AutoCommand {
     		}
     	} else {
     		if (encoderValue<stopValue) {
+    	    	SmartDashboard.putString("DB/String 7", "Encoder: " + encoderValue + "/" + stopValue);
     			return true;
     		}else if((Math.abs(stopValue)-Math.abs(encoderValue)) > controller.feetToEncoder(slower)) {
     			speed = 0.5;

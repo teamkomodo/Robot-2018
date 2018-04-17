@@ -74,6 +74,11 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void robotInit() {
+    	SmartDashboard.putString("DB/String 5", (""));
+    	SmartDashboard.putString("DB/String 6", (""));
+    	SmartDashboard.putString("DB/String 7", (""));
+    	SmartDashboard.putString("DB/String 8", (""));
+
         driveSystem = new DriveSystem();
         manipulatorSystem = new ManipulatorSystem();
         lifterSystem = new LifterSystem();
@@ -225,7 +230,6 @@ public class Robot extends TimedRobot {
 
     //converts a string input from the driver station into an ENUM position
     private POSITION position(String position) {
-		//position= position.toUpperCase();
 		System.out.println(position);
 		POSITION start = POSITION.CENTER;
 		if(position.toUpperCase().startsWith("R")) {
