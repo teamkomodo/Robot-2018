@@ -73,7 +73,7 @@ public class AutoGyroForwardCommand extends AutoCommand {
     		if (encoderValue>stopValue) {
     			controller.arcade(0, 0);
     			return true;
-    		}else if((Math.abs(stopValue)-Math.abs(encoderValue)) > controller.feetToEncoder(slower)) {
+    		}else if((Math.abs(stopValue)-Math.abs(encoderValue)) < controller.feetToEncoder(slower)) {
     			dSpeed = 0.5;
     			return false;
     		}
@@ -81,7 +81,7 @@ public class AutoGyroForwardCommand extends AutoCommand {
     		if (encoderValue<stopValue) {
     			controller.arcade(0, 0);
     			return true;
-    		}else if((Math.abs(stopValue)-Math.abs(encoderValue)) > controller.feetToEncoder(slower)) {
+    		}else if((Math.abs(stopValue)-Math.abs(encoderValue)) < controller.feetToEncoder(slower)) {
     			dSpeed = 0.5;
     			return false;
     		}
