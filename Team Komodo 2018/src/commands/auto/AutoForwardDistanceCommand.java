@@ -1,5 +1,6 @@
 package commands.auto;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import robotMain.Robot;
 
 public class AutoForwardDistanceCommand extends AutoCommand {
@@ -7,6 +8,7 @@ public class AutoForwardDistanceCommand extends AutoCommand {
 	private int startValue;
 	private int encoderValue;
 	private int stopValue;
+	double speed;
 	private double timerAdjustment = 7.0;
 	
     public AutoForwardDistanceCommand(double dFT) {
@@ -22,16 +24,16 @@ public class AutoForwardDistanceCommand extends AutoCommand {
     	startValue = Robot.driveSystem.getRightEncoderRaw();
     	encoderValue = startValue;
         stopValue = encoderValue+controller.feetToEncoder(distanceFT);
+        speed = controller.getAutoSpeed();
     }
 
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
-    	double speed;
     	if (stopValue-startValue > 0)
-    		speed = controller.getAutoSpeed();
+    		speed = Math.abs(speed);
     	else
-    		speed = -controller.getAutoSpeed();
+    		speed = -1 * Math.abs(speed);
     	
     	controller.tank(speed, speed);
     	encoderValue = Robot.driveSystem.getRightEncoderRaw();
@@ -40,14 +42,22 @@ public class AutoForwardDistanceCommand extends AutoCommand {
     // Make this return true when this Command no longer needs to run execute()
     @Override
     protected boolean isFinished() {
-    	System.out.println(startValue+" "+encoderValue+" "+stopValue);
+    	//System.out.println(startValue+" "+encoderValue+" "+stopValue);
+    	SmartDashboard.putString("DB/String 7", "Encoder: " + encoderValue + "/" + stopValue);
+
     	if (stopValue>startValue) {
     		if (encoderValue>stopValue) {
     			return true;
+    		}else if((Math.abs(stopValue)-Math.abs(encoderValue)) > controller.feetToEncoder(slower)) {
+    			speed = 0.5;
+    			return false;
     		}
     	} else {
     		if (encoderValue<stopValue) {
     			return true;
+    		}else if((Math.abs(stopValue)-Math.abs(encoderValue)) > controller.feetToEncoder(slower)) {
+    			speed = 0.5;
+    			return false;
     		}
     	}
     	return isTimedOut();

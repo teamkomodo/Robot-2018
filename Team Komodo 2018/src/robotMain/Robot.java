@@ -195,7 +195,7 @@ public class Robot extends TimedRobot {
         if(autonomousCommand != null) autonomousCommand.cancel();
 
         //autonomousCommand = (Command) chooser.getSelected();
-        boolean useDashboard = SmartDashboard.getBoolean("DB/Button 0", true);
+        boolean useDashboard = SmartDashboard.getBoolean("DB/Button 0", false);
         POSITION start;
         Boolean scale;
         
@@ -225,13 +225,13 @@ public class Robot extends TimedRobot {
 
     //converts a string input from the driver station into an ENUM position
     private POSITION position(String position) {
-		position= position.toUpperCase();
+		//position= position.toUpperCase();
 		System.out.println(position);
 		POSITION start = POSITION.CENTER;
-		if(position.startsWith("R")) {
+		if(position.toUpperCase().startsWith("R")) {
 			start = POSITION.RIGHT;
 		}
-		else if(position.startsWith("L")) {
+		else if(position.toUpperCase().startsWith("L")) {
 			start = POSITION.LEFT;
 		}
 		return start;

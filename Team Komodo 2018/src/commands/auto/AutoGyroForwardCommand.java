@@ -11,6 +11,7 @@ public class AutoGyroForwardCommand extends AutoCommand {
 	private int encoderValue;
 	private int stopValue;
 	private double timerAdjustment = (2.0/3.0);
+	private double slower = 1;
 	
 	private double dSpeed;
 	
@@ -58,7 +59,7 @@ public class AutoGyroForwardCommand extends AutoCommand {
 	// Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
-    	double speed = 0.75;
+//    	double speed = 0.75;
     	double angle = controller.getAngle(); // get current heading
         controller.arcade(dSpeed, angle*Kp); // drive towards heading 0
     	encoderValue = getEncoderRaw();
@@ -72,11 +73,17 @@ public class AutoGyroForwardCommand extends AutoCommand {
     		if (encoderValue>stopValue) {
     			controller.arcade(0, 0);
     			return true;
+    		}else if((Math.abs(stopValue)-Math.abs(encoderValue)) > controller.feetToEncoder(slower)) {
+    			dSpeed = 0.5;
+    			return false;
     		}
     	} else {
     		if (encoderValue<stopValue) {
     			controller.arcade(0, 0);
     			return true;
+    		}else if((Math.abs(stopValue)-Math.abs(encoderValue)) > controller.feetToEncoder(slower)) {
+    			dSpeed = 0.5;
+    			return false;
     		}
     	}
     	return isTimedOut();

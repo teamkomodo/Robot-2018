@@ -13,19 +13,20 @@ import robotMain.Robot.POSITION;
 public class AutoSameSideCommandGroup extends CommandGroup{
 	private double MANIPULATE_TIME_S = 1;
 	
-	private double liftTimeS = 5;
+	private double liftTimeS;// = 5;
 	private double startFT;
 	private double turnToGoalDegrees;
 	private boolean useL;
 	private boolean useR;
 	
 	public AutoSameSideCommandGroup(POSITION side, Boolean scale) {
+		liftTimeS = 5;
 		startFT = 24;
-		turnToGoalDegrees = 80;
+		turnToGoalDegrees = -80;
 		useL = true; //false;
 		useR = true;
 		if(!scale) {
-			turnToGoalDegrees = 90;
+			turnToGoalDegrees = -90;
 			//startFT = 168/12.0;
 			startFT = 10.5;
 			liftTimeS = 2;

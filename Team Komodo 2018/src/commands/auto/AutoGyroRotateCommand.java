@@ -1,14 +1,17 @@
 package commands.auto;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import robotMain.Robot;
 import subsystems.AutoController;
 
 public class AutoGyroRotateCommand extends AutoCommand {
 	AutoController controller;
 	private double degreeRotation;
+	private double degreeSlower = 10;
 	
 	private boolean useLeft = true;
 	private boolean useRight =true;
+	private double speed = 0.75;
 	
 	// Positive degreeRotation <=> counter-clockwise
 	// Negative degreeRotation <=> clockwise
@@ -40,13 +43,12 @@ public class AutoGyroRotateCommand extends AutoCommand {
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
-    	double speed;
     	// Counter-Clockwise
     	if (degreeRotation > 0)
-    		speed = -0.75; //controller.getAutoSpeed();
+    		speed = -1 * Math.abs(speed); //controller.getAutoSpeed();
     	// Clockwise
     	else
-    		speed = 0.75;//-controller.getAutoSpeed();
+    		speed = Math.abs(speed); //controller.getAutoSpeed();
     	
     	//controller.tank(speed, -speed);
     	double lSpeed = useLeft ? speed : 0;
@@ -57,14 +59,18 @@ public class AutoGyroRotateCommand extends AutoCommand {
     // Make this return true when this Command no longer needs to run execute()
     @Override
     protected boolean isFinished() {
-    	System.out.println("Gyro Log: "+ controller.getAngle() + " " + degreeRotation);
+    	//System.out.println("Gyro Log: "+ controller.getAngle() + " " + degreeRotation);
+    	SmartDashboard.putString("DB/String 8", "Gyro: " + controller.getAngle() + "/" + degreeRotation);
+
     	//if (Math.abs(controller.getAngle()) > Math.abs(degreeRotation))
     	double currAngle = controller.getAngle();
     	if (Math.abs(controller.getAngle()) > Math.abs(degreeRotation)
     		&& currAngle/Math.abs(currAngle)==degreeRotation/Math.abs(degreeRotation)) {
     		controller.tank(0, 0);
     		return true;    		
-    	}
-    	return false;
+    	}else if ((Math.abs(controller.getAngle()) - Math.abs(degreeRotation) < degreeSlower)
+        		&& currAngle/Math.abs(currAngle)==degreeRotation/Math.abs(degreeRotation)) {
+        	speed = 0.5;
+    	}return false;
     }
 }
