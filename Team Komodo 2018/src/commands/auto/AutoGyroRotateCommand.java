@@ -39,6 +39,7 @@ public class AutoGyroRotateCommand extends AutoCommand {
     protected void initialize() {
     	controller.resetGyro();
         controller.resetGyro();
+        System.out.println("Start Auto turn " + degreeRotation + " degrees");
     }
     
     // Called repeatedly when this Command is scheduled to run
@@ -61,22 +62,21 @@ public class AutoGyroRotateCommand extends AutoCommand {
     @Override
     protected boolean isFinished() {
     	//System.out.println("Gyro Log: "+ controller.getAngle() + " " + degreeRotation);
-    	//SmartDashboard.putString("DB/String 8", "Gyro: " + controller.getAngle() + "/" + degreeRotation);
 
     	//if (Math.abs(controller.getAngle()) > Math.abs(degreeRotation))
     	double currAngle = controller.getAngle();
     	if (Math.abs(controller.getAngle()) > Math.abs(degreeRotation)
     		&& currAngle/Math.abs(currAngle)==degreeRotation/Math.abs(degreeRotation)) {
     		controller.tank(0, 0);
-//        	SmartDashboard.putString("DB/String 8", "Gyro: " + controller.getAngle() + "/" + degreeRotation);
-        	System.out.println("Gyro Log: "+ controller.getAngle() + " " + degreeRotation);
+        	System.out.println("Gyro completed turn of " + degreeRotation + " degrees, actual turn was " + controller.getAngle() + " degrees");
     		return true;    		
     	}else if ((Math.abs(degreeRotation) - Math.abs(controller.getAngle()) < degreeSlower)
         		&& currAngle/Math.abs(currAngle)==degreeRotation/Math.abs(degreeRotation)) {
         	speed = 0.7;
     	}
     	if(isTimedOut()) {
-    		System.out.println("GYRO TIMED OUT!!!");
+    		System.out.println("AUTO TURN TIMED OUT!!!");
+        	System.out.println("Auto completed turn of " + degreeRotation + " degrees, actual turn was " + controller.getAngle() + " degrees");
     	}
     	return isTimedOut();
     }

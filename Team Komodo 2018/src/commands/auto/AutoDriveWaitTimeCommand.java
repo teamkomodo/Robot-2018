@@ -8,11 +8,13 @@ public class AutoDriveWaitTimeCommand extends AutoCommand {
 	
     public AutoDriveWaitTimeCommand(double tCT) {
     	requires(Robot.driveSystem);
-    	
+        System.out.println("Auto wait " + tCT + " seconds");
+
         setTimeout(tCT);
     }
     public AutoDriveWaitTimeCommand() {
     	requires(Robot.driveSystem);
+        System.out.println("Auto wait " + waitBeginning + " seconds");
     	
         setTimeout(waitBeginning);
     }

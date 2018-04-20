@@ -44,7 +44,6 @@ public class AutoForwardDistanceCommand extends AutoCommand {
     @Override
     protected boolean isFinished() {
     	//System.out.println(startValue+" "+encoderValue+" "+stopValue);
-    	SmartDashboard.putString("DB/String 7", "Encoder: " + encoderValue + "/" + stopValue);
 
     	if (stopValue>startValue) {
     		if (encoderValue>stopValue) {

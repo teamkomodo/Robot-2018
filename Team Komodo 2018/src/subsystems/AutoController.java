@@ -1,8 +1,6 @@
 package subsystems;
 
 import comAnalogAdis16448.ADIS16448_IMU;
-import edu.wpi.first.wpilibj.AnalogGyro;
-import edu.wpi.first.wpilibj.interfaces.Gyro;
 import robotMain.RobotMap;
 
 public class AutoController {

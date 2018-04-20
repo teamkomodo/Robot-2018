@@ -1,6 +1,5 @@
 package commands.auto;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import robotMain.Robot;
 import subsystems.AutoController;
 
@@ -25,6 +24,7 @@ public class AutoGyroForwardCommand extends AutoCommand {
         distanceFT = distance;
         
         setTimeout(Math.abs(distance/timerAdjustment));
+        
         if (distance < 0) {
         	dSpeed = -controller.getAutoSpeed();
         }else {
@@ -55,6 +55,7 @@ public class AutoGyroForwardCommand extends AutoCommand {
      	startValue = getEncoderRaw();
     	encoderValue = startValue;
         stopValue = encoderValue+controller.feetToEncoder(distanceFT);
+        System.out.println("Start Auto forward " + distanceFT + " feet, " + (stopValue-startValue) + " encoder counts");
     }
     
 	// Called repeatedly when this Command is scheduled to run
@@ -73,8 +74,8 @@ public class AutoGyroForwardCommand extends AutoCommand {
     	if (stopValue>startValue) {
     		if (encoderValue>stopValue) {
     			controller.arcade(0, 0);
-//    	    	SmartDashboard.putString("DB/String 7", "Encoder: " + encoderValue + "/" + stopValue);
-    	    	System.out.println(startValue + " " + encoderValue + " " + stopValue);
+    	    	System.out.println("Auto Forward expected to go from " +
+    	    			startValue + " to " + stopValue + " and went to " + encoderValue);
     			return true;
     		}else if((Math.abs(stopValue)-Math.abs(encoderValue)) < controller.feetToEncoder(slower)) {
     			dSpeed = 0.5;
@@ -82,15 +83,17 @@ public class AutoGyroForwardCommand extends AutoCommand {
     	} else {
     		if (encoderValue<stopValue) {
     			controller.arcade(0, 0);
-//    	    	SmartDashboard.putString("DB/String 7", "Encoder: " + encoderValue + "/" + stopValue);
-    			System.out.println(startValue + " " + encoderValue + " " + stopValue);
+    	    	System.out.println("Auto Forward expected to go from " +
+    	    			startValue + " to " + stopValue + " and went to " + encoderValue);
     			return true;
     		}else if(Math.abs((Math.abs(stopValue)-Math.abs(encoderValue))) < Math.abs(controller.feetToEncoder(slower))) {
     			dSpeed = 0.5;
     		}
     	}
     	if(isTimedOut()) {
-    		System.out.println("AutoGyroForwardCommand TIMED OUT!!!");
+    		System.out.println("AutoGyroForwardCommand TIMED OUT after " + Math.abs(distanceFT/timerAdjustment) + " seconds!!!");
+	    	System.out.println("Auto Forward expected to go from " +
+	    			startValue + " to " + stopValue + " and went to " + encoderValue);
     	}
     	return isTimedOut();
     }
