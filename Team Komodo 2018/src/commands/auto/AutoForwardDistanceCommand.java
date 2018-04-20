@@ -48,7 +48,6 @@ public class AutoForwardDistanceCommand extends AutoCommand {
 
     	if (stopValue>startValue) {
     		if (encoderValue>stopValue) {
-    	    	SmartDashboard.putString("DB/String 7", "Encoder: " + encoderValue + "/" + stopValue);
     			return true;
     		}else if((Math.abs(stopValue)-Math.abs(encoderValue)) > controller.feetToEncoder(slower)) {
     			speed = 0.5;
@@ -56,12 +55,14 @@ public class AutoForwardDistanceCommand extends AutoCommand {
     		}
     	} else {
     		if (encoderValue<stopValue) {
-    	    	SmartDashboard.putString("DB/String 7", "Encoder: " + encoderValue + "/" + stopValue);
     			return true;
     		}else if((Math.abs(stopValue)-Math.abs(encoderValue)) > controller.feetToEncoder(slower)) {
     			speed = 0.5;
     			return false;
     		}
+    	}
+    	if(isTimedOut()) {
+    		System.out.println("TIMED OUT!!!");
     	}
     	return isTimedOut();
     }

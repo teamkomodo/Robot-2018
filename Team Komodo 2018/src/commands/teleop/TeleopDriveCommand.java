@@ -121,7 +121,7 @@ public class TeleopDriveCommand extends Command {
 													 double previousPosition) {
 		int function = -1;
 		double precision = 0.01;
-		double percentStep = 0.05;
+		double percentStep = RobotMap.ROUND_INCREMENT;
 		double slowStartStop = 0.3;
 		double slowPercentStep = 0.02;
 		double adjusted = currentPosition;
@@ -133,9 +133,17 @@ public class TeleopDriveCommand extends Command {
 		}else if(function == 1) {
 			if(Math.abs(currentPosition - previousPosition) > percentStep) {
 				if(currentPosition > previousPosition) {
-					adjusted += percentStep;
+					if(currentPosition-previousPosition<RobotMap.ROUND_INCREMENT) {
+						adjusted = currentPosition;
+					}else {
+						adjusted += percentStep;
+					}
 				}else {
-					adjusted -= percentStep;
+					if(currentPosition-previousPosition<RobotMap.ROUND_INCREMENT) {
+						adjusted = currentPosition;
+					}else {
+						adjusted += percentStep;
+					}
 				}
 			}
 		}else if (function == 2) {

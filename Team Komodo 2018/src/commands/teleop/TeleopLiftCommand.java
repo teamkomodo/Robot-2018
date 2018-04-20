@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PWMSpeedController;
 import edu.wpi.first.wpilibj.command.Command;
 import robotMain.Robot;
+import robotMain.RobotMap;
 
 /**
  *
@@ -22,6 +23,7 @@ public class TeleopLiftCommand extends Command {
 	private Joystick gamepadL;
 	
 	private PWMSpeedController lifterController;
+	double previousLiftSpeed;
 	
     public TeleopLiftCommand() {
         requires(Robot.lifterSystem);
@@ -33,17 +35,20 @@ public class TeleopLiftCommand extends Command {
     // Called just before this Command runs the first time
     @Override
     protected void initialize() {
+    	previousLiftSpeed = gamepadL.getX();
     	
     }
 
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
+    	double currentLift = adjust(gamepadL.getY(), previousLiftSpeed) * Robot.getAmpAdjust();
     	int channel1 = 14;
     	int channel2 = 15;
     	//double liftTotalCurrent = Robot.pdp.getCurrent(channel1) + Robot.pdp.getCurrent(channel1);
     	// TODO: limit lifter motors so we don't burn them up
-    	lifterController.set(gamepadL.getY() * Robot.getAmpAdjust());
+    	lifterController.set(currentLift);
+    	previousLiftSpeed = currentLift;
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -61,5 +66,21 @@ public class TeleopLiftCommand extends Command {
     // subsystems is scheduled to run
     @Override
     protected void interrupted() {
+    }
+    
+    private double adjust(double currentPosition,
+			 double previousPosition) {
+		double percentStep = RobotMap.ROUND_INCREMENT;
+		double adjusted = currentPosition;
+
+			if(Math.abs(previousPosition - currentPosition) > percentStep) {
+				if(currentPosition > previousPosition) {
+					adjusted += percentStep;
+				}else {
+					adjusted -= percentStep;
+				}
+			}
+//			System.out.println("Lift adjust: " + adjusted);
+			return currentPosition;//adjusted;
     }
 }

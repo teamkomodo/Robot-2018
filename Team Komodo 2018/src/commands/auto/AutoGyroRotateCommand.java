@@ -11,7 +11,7 @@ public class AutoGyroRotateCommand extends AutoCommand {
 	
 	private boolean useLeft = true;
 	private boolean useRight =true;
-	private double speed = 0.75;
+	private double speed = 0.9;
 	
 	// Positive degreeRotation <=> counter-clockwise
 	// Negative degreeRotation <=> clockwise
@@ -30,6 +30,7 @@ public class AutoGyroRotateCommand extends AutoCommand {
         requires(Robot.driveSystem);
         controller = Robot.driveSystem.getAutoController();
         
+        setTimeout(4.0);
         degreeRotation = degRot;
     }
 
@@ -60,18 +61,23 @@ public class AutoGyroRotateCommand extends AutoCommand {
     @Override
     protected boolean isFinished() {
     	//System.out.println("Gyro Log: "+ controller.getAngle() + " " + degreeRotation);
-    	SmartDashboard.putString("DB/String 8", "Gyro: " + controller.getAngle() + "/" + degreeRotation);
+    	//SmartDashboard.putString("DB/String 8", "Gyro: " + controller.getAngle() + "/" + degreeRotation);
 
     	//if (Math.abs(controller.getAngle()) > Math.abs(degreeRotation))
     	double currAngle = controller.getAngle();
     	if (Math.abs(controller.getAngle()) > Math.abs(degreeRotation)
     		&& currAngle/Math.abs(currAngle)==degreeRotation/Math.abs(degreeRotation)) {
     		controller.tank(0, 0);
-        	SmartDashboard.putString("DB/String 8", "Gyro: " + controller.getAngle() + "/" + degreeRotation);
+//        	SmartDashboard.putString("DB/String 8", "Gyro: " + controller.getAngle() + "/" + degreeRotation);
+        	System.out.println("Gyro Log: "+ controller.getAngle() + " " + degreeRotation);
     		return true;    		
-    	}else if ((Math.abs(controller.getAngle()) - Math.abs(degreeRotation) < degreeSlower)
+    	}else if ((Math.abs(degreeRotation) - Math.abs(controller.getAngle()) < degreeSlower)
         		&& currAngle/Math.abs(currAngle)==degreeRotation/Math.abs(degreeRotation)) {
-        	speed = 0.5;
-    	}return false;
+        	speed = 0.7;
+    	}
+    	if(isTimedOut()) {
+    		System.out.println("GYRO TIMED OUT!!!");
+    	}
+    	return isTimedOut();
     }
 }

@@ -45,7 +45,7 @@ public class OI {
 	private JoystickButton leftIntake;
 
     public OI() {
-    	System.out.println("Hello OI");
+    	//System.out.println("Hello OI");
         leftJoystick = new Joystick(RobotMap.leftJoystickPort);
         rightJoystick = new Joystick(RobotMap.rightJoystickPort);
         

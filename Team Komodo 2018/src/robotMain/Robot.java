@@ -112,17 +112,6 @@ public class Robot extends TimedRobot {
         teleopDriveCommand = new TeleopDriveCommand();
         teleopLiftCommand = new TeleopLiftCommand();
         teleopManipulatorCommand = new TeleopManipulatorCommand();
-
-//        chooser.addDefault("Auto Line", new AutoLineCommandGroup());
-//        chooser.addObject("Same Side Left Scale", new AutoSameSideCommandGroup("left",
-//																				"scale"));
-//		chooser.addObject("Same Side Left Switch", new AutoSameSideCommandGroup("left",
-//																				 "switch"));
-//		chooser.addObject("Same Side Right Scale", new AutoSameSideCommandGroup("right",
-//																				"scale"));
-//		chooser.addObject("Same Side Right Switch", new AutoSameSideCommandGroup("right",
-//				 																 "switch"));
-//        SmartDashboard.putData("Auto mode", chooser);
         
         positionChooser.addDefault("Left", POSITION.LEFT);
         positionChooser.addObject("Center", POSITION.CENTER);
@@ -189,21 +178,21 @@ public class Robot extends TimedRobot {
 
     @Override
     public void autonomousInit() {
-    	//WPI lib provided code to get the field data.  
+        POSITION start;
+        Boolean scale;
+
+        //WPI lib provided code to get the field data.  
     	//Three character string for switch, scale, switch.
-    	String gameData;
-		gameData = DriverStation.getInstance().getGameSpecificMessage();
+    	String gameData = DriverStation.getInstance().getGameSpecificMessage();
+    	System.out.println("gameData = "+gameData);
 		
+        boolean useDashboard = SmartDashboard.getBoolean("DB/Button 0", false);
+        
     	//if (teleopDriveCommand != null) teleopDriveCommand.cancel();
         if (teleopLiftCommand != null) teleopLiftCommand.cancel();
         if (teleopManipulatorCommand != null) teleopManipulatorCommand.cancel();
-        if(autonomousCommand != null) autonomousCommand.cancel();
+        if (autonomousCommand != null) autonomousCommand.cancel();
 
-        //autonomousCommand = (Command) chooser.getSelected();
-        boolean useDashboard = SmartDashboard.getBoolean("DB/Button 0", false);
-        POSITION start;
-        Boolean scale;
-        
         if(useDashboard) {
         	System.out.println("Use Dashboard");
         	start = position(SmartDashboard.getString("DB/String 0", "hello"));
@@ -216,21 +205,16 @@ public class Robot extends TimedRobot {
         	start = POSITION.LEFT;
         	scale = false;
         }
-    	System.out.println("gameData = "+gameData);
 
         autonomousCommand = chooseCommand(start, scale, 
         		getSide(gameData),
         		getSide(gameData.substring(1)));
-    	//autonomousCommand = chooseCommand(POSITION.RIGHT, true, getSide(gameData), getSide(gameData.substring(1)));
-    	//chooseCommand(start, scale, getSide(gameData), getSide(gameData.substring(1)));
-    	//autonomousCommand = new AutoLineCommandGroup();
-        //autonomousCommand = null;
         if (autonomousCommand != null) autonomousCommand.start();
     }
 
     //converts a string input from the driver station into an ENUM position
     private POSITION position(String position) {
-		System.out.println(position);
+		//System.out.println(position);
 		POSITION start = POSITION.CENTER;
 		if(position.toUpperCase().startsWith("R")) {
 			start = POSITION.RIGHT;

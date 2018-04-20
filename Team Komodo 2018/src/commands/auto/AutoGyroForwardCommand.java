@@ -1,5 +1,6 @@
 package commands.auto;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import robotMain.Robot;
 import subsystems.AutoController;
 
@@ -11,7 +12,7 @@ public class AutoGyroForwardCommand extends AutoCommand {
 	private int encoderValue;
 	private int stopValue;
 	private double timerAdjustment = 1;
-	private double slower = 1;
+	private double slower = 0;
 	
 	private double dSpeed;
 	
@@ -42,7 +43,7 @@ public class AutoGyroForwardCommand extends AutoCommand {
     }
     
     private int getEncoderRaw() {
-		return -Robot.driveSystem.getRightEncoderRaw();
+		return -Robot.driveSystem.getLeftEncoderRaw();
 		//return Robot.driveSystem.getLeftEncoderRaw();
 	}
 
@@ -50,7 +51,7 @@ public class AutoGyroForwardCommand extends AutoCommand {
     @Override
     protected void initialize() {
     	controller.resetGyro();
-    	Robot.driveSystem.resetRightEncoder();
+    	Robot.driveSystem.resetLeftEncoder();
      	startValue = getEncoderRaw();
     	encoderValue = startValue;
         stopValue = encoderValue+controller.feetToEncoder(distanceFT);
@@ -72,19 +73,24 @@ public class AutoGyroForwardCommand extends AutoCommand {
     	if (stopValue>startValue) {
     		if (encoderValue>stopValue) {
     			controller.arcade(0, 0);
+//    	    	SmartDashboard.putString("DB/String 7", "Encoder: " + encoderValue + "/" + stopValue);
+    	    	System.out.println(startValue + " " + encoderValue + " " + stopValue);
     			return true;
     		}else if((Math.abs(stopValue)-Math.abs(encoderValue)) < controller.feetToEncoder(slower)) {
     			dSpeed = 0.5;
-    			return false;
     		}
     	} else {
     		if (encoderValue<stopValue) {
     			controller.arcade(0, 0);
+//    	    	SmartDashboard.putString("DB/String 7", "Encoder: " + encoderValue + "/" + stopValue);
+    			System.out.println(startValue + " " + encoderValue + " " + stopValue);
     			return true;
-    		}else if((Math.abs(stopValue)-Math.abs(encoderValue)) < controller.feetToEncoder(slower)) {
+    		}else if(Math.abs((Math.abs(stopValue)-Math.abs(encoderValue))) < Math.abs(controller.feetToEncoder(slower))) {
     			dSpeed = 0.5;
-    			return false;
     		}
+    	}
+    	if(isTimedOut()) {
+    		System.out.println("AutoGyroForwardCommand TIMED OUT!!!");
     	}
     	return isTimedOut();
     }

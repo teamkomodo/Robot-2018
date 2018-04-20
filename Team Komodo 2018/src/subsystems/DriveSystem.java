@@ -109,12 +109,12 @@ public class DriveSystem extends Subsystem {
     
     public void resetLeftEncoder() {
     	leftEncoder.reset();
-		System.out.println("Left encoder:/t" + Robot.driveSystem.getLeftEncoderRaw());
+		System.out.println("Reset Left encoder:	" + Robot.driveSystem.getLeftEncoderRaw());
     }
     
     public void resetRightEncoder() {
     	rightEncoder.reset();
-		System.out.println("Right encoder:/t" + Robot.driveSystem.getRightEncoderRaw());
+		System.out.println("Reset Right encoder:	" + Robot.driveSystem.getRightEncoderRaw());
     }
     
     

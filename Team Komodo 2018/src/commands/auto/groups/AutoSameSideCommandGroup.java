@@ -1,12 +1,10 @@
 package commands.auto.groups;
 
 import commands.auto.AutoDriveWaitTimeCommand;
-import commands.auto.AutoForwardDistanceCommand;
 import commands.auto.AutoGyroForwardCommand;
 import commands.auto.AutoGyroRotateCommand;
 import commands.auto.AutoLiftTimeCommand;
 import commands.auto.AutoManipulateTimeCommand;
-import commands.auto.AutoEncoderRotateCommand;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import robotMain.Robot.POSITION;
 
@@ -53,7 +51,6 @@ public class AutoSameSideCommandGroup extends CommandGroup{
 //		System.out.println("MANIPULATE_TIME_S : "+MANIPULATE_TIME_S);
 		
 		addSequential(new AutoGyroForwardCommand(startFT, 0.75));
-		//addSequential(new AutoForwardDistanceCommand(startFT));
 		addSequential(new AutoDriveWaitTimeCommand(.25));
 		addSequential(new AutoLiftTimeCommand(liftTimeS));
 		addSequential(new AutoGyroRotateCommand(turnToGoalDegrees, useL, useR));

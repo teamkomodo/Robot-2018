@@ -1,10 +1,9 @@
 package commands.auto.groups;
 
 import commands.auto.AutoDriveWaitTimeCommand;
-import commands.auto.AutoForwardDistanceCommand;
+import commands.auto.AutoGyroForwardCommand;
 import commands.auto.AutoLiftTimeCommand;
 import commands.auto.AutoManipulateTimeCommand;
-import commands.auto.AutoEncoderRotateCommand;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import robotMain.Robot.POSITION;
 
@@ -33,14 +32,14 @@ public class AutoOppositeSideCommandGroup extends CommandGroup{
 	}
 	private void constructCommandGroup() {
 		addSequential(new AutoDriveWaitTimeCommand());
-		addSequential(new AutoForwardDistanceCommand(START_FT));
+		addSequential(new AutoGyroForwardCommand(START_FT));
 		addSequential(new AutoEncoderRotateWaitCommandGroup(turnToGoalDegrees));
-		addSequential(new AutoForwardDistanceCommand(NEXT_FT));
+		addSequential(new AutoGyroForwardCommand(NEXT_FT));
 		addSequential(new AutoEncoderRotateWaitCommandGroup(finalTurnDegrees));
-		addSequential(new AutoForwardDistanceCommand(finalApproachFT));
+		addSequential(new AutoGyroForwardCommand(finalApproachFT));
 		addSequential(new AutoEncoderRotateWaitCommandGroup(finalTurnDegrees));
 		addSequential(new AutoLiftTimeCommand(LIFT_TIME_S));
-		addSequential(new AutoForwardDistanceCommand(END_DISTANCE_FT));
+		addSequential(new AutoGyroForwardCommand(END_DISTANCE_FT));
 		addSequential(new AutoManipulateTimeCommand(MANIPULATE_TIME_S));
 	}
 }

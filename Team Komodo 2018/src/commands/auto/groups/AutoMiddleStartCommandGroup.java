@@ -1,12 +1,10 @@
 package commands.auto.groups;
 
 import commands.auto.AutoDriveWaitTimeCommand;
-import commands.auto.AutoForwardDistanceCommand;
 import commands.auto.AutoGyroForwardCommand;
 import commands.auto.AutoGyroRotateCommand;
 import commands.auto.AutoLiftTimeCommand;
 import commands.auto.AutoManipulateTimeCommand;
-import commands.auto.AutoEncoderRotateCommand;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import robotMain.Robot.POSITION;
 
@@ -40,7 +38,6 @@ public class AutoMiddleStartCommandGroup extends CommandGroup{
 		addSequential(new AutoGyroRotateCommand(turnToSwitchDegreesOne));
 		addParallel(new AutoLiftTimeCommand(LIFT_TIME_S));
 		addSequential(new AutoGyroForwardCommand(FORWARD_TWO_FT));
-		//addSequential(new AutoGyroForwardCommand(FORWARD_TWO_FT/2.0, 0.6));
 		addSequential(new AutoGyroRotateCommand(turnToSwitchDegreesTwo));
 		//addSequential(new AutoLiftTimeCommand(LIFT_TIME_S));
 		addSequential(new AutoGyroForwardCommand(END_DISTANCE_FT));
